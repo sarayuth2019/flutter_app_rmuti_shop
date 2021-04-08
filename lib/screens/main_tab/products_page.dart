@@ -19,7 +19,7 @@ class ProductsPage extends StatefulWidget {
       this.location,
       this.user_id,
       this.data,
-      this.image);
+      this.image, this.discount, this.count_promotion, this.status_promotion);
 
   final int accountID;
   final int id;
@@ -32,12 +32,15 @@ class ProductsPage extends StatefulWidget {
   final int user_id;
   final String data;
   final String image;
+  final int discount;
+  final int count_promotion;
+  final int status_promotion;
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
     return _ProductsPage(accountID, id, name, description, rating, countRating,
-        price, location, user_id, data, image);
+        price, location, user_id, data, image,status_promotion,count_promotion,discount);
   }
 }
 
@@ -53,7 +56,7 @@ class _ProductsPage extends State {
       this.location,
       this.seller_id,
       this.data,
-      this.image);
+      this.image, this.discount, this.count_promotion, this.status_promotion);
 
   final int accountID;
   final int id;
@@ -66,6 +69,9 @@ class _ProductsPage extends State {
   final int seller_id;
   final String data;
   final String image;
+  final int discount;
+  final int count_promotion;
+  final int status_promotion;
   int number = 1;
 
   final urlSaveItemToCart = "https://testheroku11111.herokuapp.com/Cart/save";

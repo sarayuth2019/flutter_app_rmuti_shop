@@ -25,6 +25,10 @@ class _SearchLocation extends State {
 
   List _searchProducts = [];
 
+  int ratingCount = 10;
+  double rating = 3.9;
+
+
   @override
   void initState() {
     // TODO: implement initState
@@ -68,17 +72,21 @@ class _SearchLocation extends State {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ProductsPage(
-                                    accountID,
-                                    _searchProducts[index].id,
-                                    _searchProducts[index].name,
-                                    _searchProducts[index].description,
-                                    _searchProducts[index].rating,
-                                    _searchProducts[index].countRating,
-                                    _searchProducts[index].price,
-                                    _searchProducts[index].location,
-                                    _searchProducts[index].user_id,
-                                    _searchProducts[index].data,
-                                    _searchProducts[index].image)));
+                                  accountID,
+                                  _searchProducts[index].id,
+                                  _searchProducts[index].name,
+                                  _searchProducts[index].description,
+                                  rating,
+                                  ratingCount,
+                                  _searchProducts[index].price,
+                                  _searchProducts[index].location,
+                                  _searchProducts[index].user_id,
+                                  _searchProducts[index].date,
+                                  _searchProducts[index].image,
+                                  _searchProducts[index].status_promotion,
+                                  _searchProducts[index].count_promotion,
+                                  _searchProducts[index].discount,
+                                )));
                       },
                       child: Card(
                         child: Row(

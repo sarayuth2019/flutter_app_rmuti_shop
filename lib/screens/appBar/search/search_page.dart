@@ -83,18 +83,20 @@ class _SearchPage extends State {
     var _dataAllProducts = _jsonDataAllProducts['data'];
 
     List<_Products> listAllProducts = [];
-    for (var p in _dataAllProducts) {
+    for (var i in _dataAllProducts) {
       _Products _products = _Products(
-          p['id'],
-          p['name'],
-          p['description'],
-          p['rating'],
-          p['count_rating'],
-          p['price'],
-          p['location'],
-          p['user'],
-          p['date'],
-          p['image']);
+          i['id'],
+          i['name'],
+          i['group'],
+          i['description'],
+          i['price'],
+          i['location'],
+          i['user'],
+          i['discount'],
+          i['count_promotion'],
+          i['status_promotion'],
+          i['date'],
+          i['image']);
       listAllProducts.add(_products);
     }
     print("Search All Products length : ${listAllProducts.length}");
@@ -106,25 +108,28 @@ class _SearchPage extends State {
 class _Products {
   final int id;
   final String name;
+  final int group;
   final String description;
-  final int rating;
-  final int countRating;
   final int price;
   final String location;
   final int user_id;
-  final String data;
+  final int discount;
+  final int count_promotion;
+  final int status_promotion;
+  final String date;
   final String image;
 
   _Products(
-    this.id,
-    this.name,
-    this.description,
-    this.rating,
-    this.countRating,
-    this.price,
-    this.location,
-    this.user_id,
-    this.data,
-    this.image,
-  );
+      this.id,
+      this.name,
+      this.group,
+      this.description,
+      this.price,
+      this.location,
+      this.user_id,
+      this.discount,
+      this.count_promotion,
+      this.status_promotion,
+      this.date,
+      this.image);
 }

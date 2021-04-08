@@ -27,6 +27,9 @@ class _ProductsGroupPage extends State {
   final urlFindByGroup =
       "https://testheroku11111.herokuapp.com/Item/find/group";
   String textGroup;
+  int ratingCount = 10;
+  double rating = 3.9;
+
 
   @override
   void initState() {
@@ -68,17 +71,20 @@ class _ProductsGroupPage extends State {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ProductsPage(
-                                      accountID,
-                                      snapshot.data[index].id,
-                                      snapshot.data[index].name,
-                                      snapshot.data[index].description,
-                                      snapshot.data[index].rating,
-                                      snapshot.data[index].countRating,
-                                      snapshot.data[index].price,
-                                      snapshot.data[index].location,
-                                      snapshot.data[index].user_id,
-                                      snapshot.data[index].data,
-                                      snapshot.data[index].image,
+                                  accountID,
+                                  snapshot.data[index].id,
+                                  snapshot.data[index].name,
+                                  snapshot.data[index].description,
+                                  rating,
+                                  ratingCount,
+                                  snapshot.data[index].price,
+                                  snapshot.data[index].location,
+                                  snapshot.data[index].user_id,
+                                  snapshot.data[index].date,
+                                  snapshot.data[index].image,
+                                  snapshot.data[index].status_promotion,
+                                  snapshot.data[index].count_promotion,
+                                  snapshot.data[index].discount,
                                     )));
                       },
                       child: Card(
@@ -140,8 +146,8 @@ class _ProductsGroupPage extends State {
                                       ignoreGestures: true,
                                       allowHalfRating: true,
                                       itemCount: 5,
-                                      initialRating: snapshot.data[index].rating
-                                          .toDouble(),
+                                      initialRating: rating
+                                          ,
                                       itemBuilder: (context, r) {
                                         return Icon(
                                           Icons.star_rounded,
@@ -155,7 +161,7 @@ class _ProductsGroupPage extends State {
                                       child: Row(
                                         children: [
                                           Text(
-                                            "(${snapshot.data[index].rating})",
+                                            "(${rating.toString()})",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold,
@@ -169,7 +175,7 @@ class _ProductsGroupPage extends State {
                                             color: Colors.blue,
                                           ),
                                           Text(
-                                            "(${snapshot.data[index].countRating})",
+                                            "(${ratingCount.toString()})",
                                             style: TextStyle(
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.bold,
@@ -218,19 +224,21 @@ class _ProductsGroupPage extends State {
       Map jsonData = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
       var productsData = jsonData['data'];
 
-      for (var p in productsData) {
+      for (var i in productsData) {
         print("list products...");
         _Products _products = _Products(
-            p['id'],
-            p['name'],
-            p['description'],
-            p['rating'],
-            p['count_rating'],
-            p['price'],
-            p['location'],
-            p['user'],
-            p['date'],
-            p['image']);
+            i['id'],
+            i['name'],
+            i['group'],
+            i['description'],
+            i['price'],
+            i['location'],
+            i['user'],
+            i['discount'],
+            i['count_promotion'],
+            i['status_promotion'],
+            i['date'],
+            i['image']);
         listGroupProducts.insert(0, _products);
       }
     });
@@ -242,25 +250,28 @@ class _ProductsGroupPage extends State {
 class _Products {
   final int id;
   final String name;
+  final int group;
   final String description;
-  final int rating;
-  final int countRating;
   final int price;
   final String location;
   final int user_id;
-  final String data;
+  final int discount;
+  final int count_promotion;
+  final int status_promotion;
+  final String date;
   final String image;
 
   _Products(
-    this.id,
-    this.name,
-    this.description,
-    this.rating,
-    this.countRating,
-    this.price,
-    this.location,
-    this.user_id,
-    this.data,
-    this.image,
-  );
+      this.id,
+      this.name,
+      this.group,
+      this.description,
+      this.price,
+      this.location,
+      this.user_id,
+      this.discount,
+      this.count_promotion,
+      this.status_promotion,
+      this.date,
+      this.image);
 }

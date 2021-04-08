@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 class AllProductsPage extends StatefulWidget {
   AllProductsPage();
 
-
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -31,8 +30,6 @@ class _AllProductsPage extends State {
     super.initState();
     getAccountID();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -65,8 +62,11 @@ class _AllProductsPage extends State {
                                         snapshot.data[index].price,
                                         snapshot.data[index].location,
                                         snapshot.data[index].user_id,
-                                        snapshot.data[index].data,
+                                        snapshot.data[index].date,
                                         snapshot.data[index].image,
+                                        snapshot.data[index].status_promotion,
+                                        snapshot.data[index].count_promotion,
+                                        snapshot.data[index].status_promotion,
                                       )));
                         },
                         child: Card(
@@ -120,19 +120,40 @@ class _AllProductsPage extends State {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          "฿${snapshot.data[index].price}",
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "฿${snapshot.data[index].price}",
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            Container(
+                                                child: snapshot.data[index]
+                                                            .status_promotion ==
+                                                        1
+                                                    ? Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                              "ซื้อครบ ${snapshot.data[index].count_promotion} ชิ้น"),
+                                                          Text(
+                                                              "รับส่วนลด ${snapshot.data[index].discount} %")
+                                                        ],
+                                                      )
+                                                    : Container())
+                                          ],
                                         ),
                                       ),
                                       RatingBar.builder(
                                         ignoreGestures: true,
                                         allowHalfRating: true,
                                         itemCount: 5,
-                                        initialRating:
-                                            rating,
+                                        initialRating: rating,
                                         itemBuilder: (context, r) {
                                           return Icon(
                                             Icons.star_rounded,
@@ -198,7 +219,7 @@ class _AllProductsPage extends State {
   }
 
   Future<void> _onRefresh() async {
-    getAccountID();
+    _listProducts();
     setState(() {});
     await Future.delayed(Duration(seconds: 3));
   }
@@ -211,16 +232,20 @@ class _AllProductsPage extends State {
         jsonDecode(utf8.decode(_getDataProDucts.bodyBytes));
     var _dataAllProducts = _jsonDataAllProducts['data'];
     List<_Products> listAllProducts = [];
-    for (var p in _dataAllProducts) {
+    for (var i in _dataAllProducts) {
       _Products _products = _Products(
-          p['id'],
-          p['name'],
-          p['description'],
-          p['price'],
-          p['location'],
-          p['user'],
-          p['date'],
-          p['image']);
+          i['id'],
+          i['name'],
+          i['group'],
+          i['description'],
+          i['price'],
+          i['location'],
+          i['user'],
+          i['discount'],
+          i['count_promotion'],
+          i['status_promotion'],
+          i['date'],
+          i['image']);
       listAllProducts.insert(0, _products);
     }
     print("All Products length : ${listAllProducts.length}");
@@ -235,31 +260,37 @@ class _AllProductsPage extends State {
         accountID = accountIDInDevice;
         print("Get account login future: accountID ${accountID.toString()}");
       });
+    } else {
+      print("no have accountID login");
     }
-    else{print("no have accountID login");}
   }
-
 }
-
 
 class _Products {
   final int id;
   final String name;
+  final int group;
   final String description;
   final int price;
   final String location;
   final int user_id;
-  final String data;
+  final int discount;
+  final int count_promotion;
+  final int status_promotion;
+  final String date;
   final String image;
 
   _Products(
-    this.id,
-    this.name,
-    this.description,
-    this.price,
-    this.location,
-    this.user_id,
-    this.data,
-    this.image,
-  );
+      this.id,
+      this.name,
+      this.group,
+      this.description,
+      this.price,
+      this.location,
+      this.user_id,
+      this.discount,
+      this.count_promotion,
+      this.status_promotion,
+      this.date,
+      this.image);
 }
