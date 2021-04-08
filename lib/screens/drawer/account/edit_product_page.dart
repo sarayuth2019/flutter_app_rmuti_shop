@@ -323,7 +323,7 @@ class _EditProductPage extends State {
     params['image'] = image.toString();
     params['count_promotion'] = count_promotion.toString();
     params['discount'] = discount.toString();
-    params['status_promotion'] = status_promotion.toString();
+    params['promotion'] = status_promotion.toString();
 
     http.post(urlSellProducts, body: params).then((res) {
       Map _resData = jsonDecode(utf8.decode(res.bodyBytes)) as Map;

@@ -19,7 +19,8 @@ class AllDealsPage extends StatefulWidget {
 class _AllDealsPage extends State {
   _AllDealsPage(this.accountID);
   final int accountID;
-  final urlListAllProducts = "https://testheroku11111.herokuapp.com/Item/list";
+  final urlListAllDealsProducts = "https://testheroku11111.herokuapp.com/Item/find/status";
+  final statusPromotion = 1;
   int ratingCount = 10;
   double rating = 3.9;
 
@@ -29,7 +30,7 @@ class _AllDealsPage extends State {
     return Scaffold(
         backgroundColor: Colors.blueGrey,
         body: FutureBuilder(
-            future: _listProducts(),
+            future: _listDealProducts(),
             builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
               if (snapshot.data == null) {
                 return Center(child: CircularProgressIndicator());
@@ -211,39 +212,40 @@ class _AllDealsPage extends State {
   }
 
   Future<void> _onRefresh() async {
-    _listProducts();
+    _listDealProducts();
     setState(() {});
     await Future.delayed(Duration(seconds: 3));
   }
 
-  Future<List<_Products>> _listProducts() async {
+  Future<List<_Products>> _listDealProducts() async {
     print("connect to Api All Deals Products...");
-    var _getDataProDucts = await http.get(urlListAllProducts);
-    print("connect to Api All Deals Products Success");
-    var _jsonDataAllProducts =
-    jsonDecode(utf8.decode(_getDataProDucts.bodyBytes));
-    var _dataAllProducts = _jsonDataAllProducts['data'];
-    List<_Products> listAllProducts = [];
-    for (var i in _dataAllProducts) {
-      _Products _products = _Products(
-          i['id'],
-          i['name'],
-          i['group'],
-          i['description'],
-          i['price'],
-          i['location'],
-          i['user'],
-          i['discount'],
-          i['count_promotion'],
-          i['status_promotion'],
-          i['date'],
-          i['image']);
-      listAllProducts.insert(0, _products);
-    }
-    print("All Deals Products length : ${listAllProducts.length}");
-    return listAllProducts;
+    List<_Products> listAllDealsProducts = [];
+    Map params = Map();
+    params['promotion'] = statusPromotion.toString();
+    await http.post(urlListAllDealsProducts,body: params).then((res){
+      print("connect to Api All Deals Products Success !");
+      Map jsonData = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
+      var productsData = jsonData['data'];
+      for (var i in productsData) {
+        _Products _products = _Products(
+            i['id'],
+            i['name'],
+            i['group'],
+            i['description'],
+            i['price'],
+            i['location'],
+            i['user'],
+            i['discount'],
+            i['count_promotion'],
+            i['promotion'],
+            i['date'],
+            i['image']);
+        listAllDealsProducts.insert(0, _products);
+      }
+    });
+    print("All Deals Products length : ${listAllDealsProducts.length}");
+    return listAllDealsProducts;
   }
-
 }
 
 class _Products {

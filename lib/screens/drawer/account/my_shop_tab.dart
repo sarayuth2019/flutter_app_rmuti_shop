@@ -247,7 +247,7 @@ class _MyShop extends State {
             i['user'],
             i['discount'],
             i['count_promotion'],
-            i['status_promotion'],
+            i['promotion'],
             i['date'],
             i['image']);
         listItem.insert(0, _products);

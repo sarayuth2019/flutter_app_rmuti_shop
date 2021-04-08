@@ -243,7 +243,7 @@ class _AllProductsPage extends State {
           i['user'],
           i['discount'],
           i['count_promotion'],
-          i['status_promotion'],
+          i['promotion'],
           i['date'],
           i['image']);
       listAllProducts.insert(0, _products);

@@ -94,7 +94,7 @@ class _SearchPage extends State {
           i['user'],
           i['discount'],
           i['count_promotion'],
-          i['status_promotion'],
+          i['status'],
           i['date'],
           i['image']);
       listAllProducts.add(_products);

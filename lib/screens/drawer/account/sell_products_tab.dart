@@ -61,7 +61,6 @@ class _SellProducts extends State {
     "เครื่องแต่งกาย"
   ];
 
-
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -133,7 +132,8 @@ class _SellProducts extends State {
                       });
                     },
                     items: listDropdownLocation.map((_value) {
-                      return DropdownMenuItem(value: _value, child: Text(_value));
+                      return DropdownMenuItem(
+                          value: _value, child: Text(_value));
                     }).toList(),
                   ),
                 ),
@@ -164,7 +164,8 @@ class _SellProducts extends State {
                       });
                     },
                     items: listDropdownGroupItem.map((_value) {
-                      return DropdownMenuItem(value: _value, child: Text(_value));
+                      return DropdownMenuItem(
+                          value: _value, child: Text(_value));
                     }).toList(),
                   ),
                 ),
@@ -309,11 +310,13 @@ class _SellProducts extends State {
                 child: Column(
               children: [
                 TextField(
+                  keyboardType: TextInputType.number,
                   controller: _countPromotion,
                   decoration: InputDecoration(
                       hintText: "จำนวนต่ำสุดของการได้รับโปรโมชัน"),
                 ),
                 TextField(
+                  keyboardType: TextInputType.number,
                   controller: _discountPromotion,
                   decoration: InputDecoration(hintText: "ส่วนลดของสินค้า %"),
                 ),
@@ -349,7 +352,6 @@ class _SellProducts extends State {
   }
 
   void cancelPromotion() {
-
     countPromotion = 0;
     discountPromotion = 0;
     statusPromotion = 0;
@@ -378,7 +380,8 @@ class _SellProducts extends State {
       print("name product : ${nameMenu.toString()}");
       print("price : ${price.toString()}");
       print("group item : ${groupItem.toString()}");
-      print("โปรโมชัน statusPro ${statusPromotion.toString()} ซื้อ ${countPromotion.toString()} ลด ${discountPromotion.toString()} %");
+      print(
+          "โปรโมชัน statusPro ${statusPromotion.toString()} ซื้อ ${countPromotion.toString()} ลด ${discountPromotion.toString()} %");
 
       saveToDB();
     } else {
@@ -399,7 +402,7 @@ class _SellProducts extends State {
     params['image'] = imageData.toString();
     params['count_promotion'] = countPromotion.toString();
     params['discount'] = discountPromotion.toString();
-    params['status_promotion'] = statusPromotion.toString();
+    params['promotion'] = statusPromotion.toString();
 
     http.post(urlSellProducts, body: params).then((res) {
       Map _resData = jsonDecode(utf8.decode(res.bodyBytes)) as Map;

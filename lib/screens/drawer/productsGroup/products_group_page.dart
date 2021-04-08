@@ -5,7 +5,6 @@ import 'package:flutter_app_rmuti_shop/screens/main_tab/products_page.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 
-
 class ProductsGroupPage extends StatefulWidget {
   ProductsGroupPage(this.accountID, this.itemGroup);
 
@@ -29,7 +28,6 @@ class _ProductsGroupPage extends State {
   String textGroup;
   int ratingCount = 10;
   double rating = 3.9;
-
 
   @override
   void initState() {
@@ -71,20 +69,20 @@ class _ProductsGroupPage extends State {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ProductsPage(
-                                  accountID,
-                                  snapshot.data[index].id,
-                                  snapshot.data[index].name,
-                                  snapshot.data[index].description,
-                                  rating,
-                                  ratingCount,
-                                  snapshot.data[index].price,
-                                  snapshot.data[index].location,
-                                  snapshot.data[index].user_id,
-                                  snapshot.data[index].date,
-                                  snapshot.data[index].image,
-                                  snapshot.data[index].status_promotion,
-                                  snapshot.data[index].count_promotion,
-                                  snapshot.data[index].discount,
+                                      accountID,
+                                      snapshot.data[index].id,
+                                      snapshot.data[index].name,
+                                      snapshot.data[index].description,
+                                      rating,
+                                      ratingCount,
+                                      snapshot.data[index].price,
+                                      snapshot.data[index].location,
+                                      snapshot.data[index].user_id,
+                                      snapshot.data[index].date,
+                                      snapshot.data[index].image,
+                                      snapshot.data[index].status_promotion,
+                                      snapshot.data[index].count_promotion,
+                                      snapshot.data[index].discount,
                                     )));
                       },
                       child: Card(
@@ -135,26 +133,45 @@ class _ProductsGroupPage extends State {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        "฿${snapshot.data[index].price}",
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            "฿${snapshot.data[index].price}",
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          Container(
+                                              child: snapshot.data[index]
+                                                  .status_promotion ==
+                                                  1
+                                                  ? Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                      "ซื้อครบ ${snapshot.data[index].count_promotion} ชิ้น"),
+                                                  Text(
+                                                      "รับส่วนลด ${snapshot.data[index].discount} %")
+                                                ],
+                                              )
+                                                  : Container())
+                                        ],
                                       ),
                                     ),
                                     RatingBar.builder(
                                       ignoreGestures: true,
                                       allowHalfRating: true,
                                       itemCount: 5,
-                                      initialRating: rating
-                                          ,
+                                      initialRating: rating,
                                       itemBuilder: (context, r) {
                                         return Icon(
                                           Icons.star_rounded,
                                           color: Colors.amber,
                                         );
                                       },
-                                      itemSize: 30,
+                                      itemSize: 20,
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
@@ -236,7 +253,7 @@ class _ProductsGroupPage extends State {
             i['user'],
             i['discount'],
             i['count_promotion'],
-            i['status_promotion'],
+            i['promotion'],
             i['date'],
             i['image']);
         listGroupProducts.insert(0, _products);
