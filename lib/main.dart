@@ -1,6 +1,4 @@
 
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -355,7 +353,7 @@ class _HomePage extends State {
 
   Future logout() async {
     final SharedPreferences _accountID = await SharedPreferences.getInstance();
-    _accountID.remove('accountID');
+    _accountID.clear();
     print("account logout ! ${_accountID.toString()}");
       Navigator.pushAndRemoveUntil(
           context,

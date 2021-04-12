@@ -124,7 +124,7 @@ class _EditProductPage extends State {
                 controller: _name,
                 decoration: InputDecoration(hintText: name),
                 onChanged: (String text) {
-                    name = text;
+                  name = text;
                 },
               ),
               TextField(
@@ -132,14 +132,14 @@ class _EditProductPage extends State {
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(hintText: price.toString()),
                 onChanged: (String num) {
-                    price = int.parse(num);
+                  price = int.parse(num);
                 },
               ),
               TextField(
                 controller: _description,
                 decoration: InputDecoration(hintText: description),
                 onChanged: (String text) {
-                    description = text;
+                  description = text;
                 },
               ),
               Text(
@@ -205,8 +205,10 @@ class _EditProductPage extends State {
   _onGallery() async {
     print('Select Gallery');
     // ignore: deprecated_member_use
-    var _imageGallery =
-        await ImagePicker().getImage(source: ImageSource.gallery);
+    var _imageGallery = await ImagePicker().getImage(
+        source: ImageSource.gallery,
+        maxHeight: 640,
+        maxWidth: 640);
     if (_imageGallery != null) {
       setState(() {
         imageFile = File(_imageGallery.path);
@@ -222,8 +224,10 @@ class _EditProductPage extends State {
   _onCamera() async {
     print('Select Camera');
     // ignore: deprecated_member_use
-    var _imageGallery =
-        await ImagePicker().getImage(source: ImageSource.camera);
+    var _imageGallery = await ImagePicker().getImage(
+        source: ImageSource.camera,
+        maxHeight: 640,
+        maxWidth: 640);
     if (_imageGallery != null) {
       setState(() {
         imageFile = File(_imageGallery.path);
@@ -306,7 +310,8 @@ class _EditProductPage extends State {
     print(name);
     print(price.toString());
     print(description);
-    print('โปรโมชัน statusPro ${status_promotion.toString()} ซื้อ ${count_promotion.toString()} ลด ${discount.toString()} %');
+    print(
+        'โปรโมชัน statusPro ${status_promotion.toString()} ซื้อ ${count_promotion.toString()} ลด ${discount.toString()} %');
     saveToDB();
   }
 

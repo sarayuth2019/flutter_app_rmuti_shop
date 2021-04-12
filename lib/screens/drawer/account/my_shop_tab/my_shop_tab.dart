@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_rmuti_shop/screens/drawer/account/edit_product_page.dart';
+import 'package:flutter_app_rmuti_shop/screens/drawer/account/my_shop_tab/edit_product_page.dart';
 import 'package:http/http.dart' as http;
 
 

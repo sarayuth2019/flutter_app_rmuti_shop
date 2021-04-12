@@ -245,8 +245,10 @@ class _SellProducts extends State {
   _onGallery() async {
     print('Select Gallery');
     // ignore: deprecated_member_use
-    var _imageGallery =
-        await ImagePicker().getImage(source: ImageSource.gallery);
+    var _imageGallery = await ImagePicker().getImage(
+        source: ImageSource.gallery,
+        maxHeight: 640,
+        maxWidth: 640);
     if (_imageGallery != null) {
       setState(() {
         imageFile = File(_imageGallery.path);
@@ -262,8 +264,10 @@ class _SellProducts extends State {
   _onCamera() async {
     print('Select Camera');
     // ignore: deprecated_member_use
-    var _imageGallery =
-        await ImagePicker().getImage(source: ImageSource.camera);
+    var _imageGallery = await ImagePicker().getImage(
+        source: ImageSource.camera,
+        maxHeight: 640,
+        maxWidth: 640);
     if (_imageGallery != null) {
       setState(() {
         imageFile = File(_imageGallery.path);

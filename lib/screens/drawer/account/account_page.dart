@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_rmuti_shop/screens/appBar/cart/my_ordersell_tab.dart';
-import 'package:flutter_app_rmuti_shop/screens/drawer/account/my_shop_tab.dart';
+import 'file:///C:/Users/TopSaga/Desktop/flutter_app_rmuti_shop/lib/screens/drawer/account/my_order_tab/my_order_tab.dart';
+import 'package:flutter_app_rmuti_shop/screens/drawer/account/my_shop_tab/my_shop_tab.dart';
 import 'package:flutter_app_rmuti_shop/screens/drawer/account/sell_products_tab.dart';
 
 class AccountPage extends StatefulWidget {
@@ -26,7 +26,6 @@ class _AccountPage extends State {
     // TODO: implement build
     return DefaultTabController(
       child: Scaffold(
-        backgroundColor: Colors.blueGrey,
         appBar: AppBar(
           backgroundColor: Colors.orange[600],
           title: Text("My Account ID ${accountID.toString()}"),
@@ -35,7 +34,7 @@ class _AccountPage extends State {
             indicatorColor: Colors.white,
             tabs: [
               Tab(
-                child: Text("ออร์เดอร์ของฉัน"),
+                child: Text("ออร์เดอร์"),
               ),
               Tab(
                 child: Text("ร้านของฉัน"),
