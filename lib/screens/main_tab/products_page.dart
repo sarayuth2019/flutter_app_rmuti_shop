@@ -5,28 +5,25 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 import '../drawer/account/sing_in_up/sing_in_page.dart';
 
-
-
 class ProductsPage extends StatefulWidget {
   ProductsPage(
       this.accountID,
       this.id,
       this.name,
       this.description,
-      this.rating,
-      this.countRating,
       this.price,
       this.location,
       this.user_id,
       this.data,
-      this.image, this.discount, this.count_promotion, this.status_promotion);
+      this.image,
+      this.discount,
+      this.count_promotion,
+      this.status_promotion);
 
   final int accountID;
   final int id;
   final String name;
   final String description;
-  final double rating;
-  final int countRating;
   final int price;
   final String location;
   final int user_id;
@@ -39,8 +36,20 @@ class ProductsPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _ProductsPage(accountID, id, name, description, rating, countRating,
-        price, location, user_id, data, image,status_promotion,count_promotion,discount);
+    return _ProductsPage(
+      accountID,
+      id,
+      name,
+      description,
+      price,
+      location,
+      user_id,
+      data,
+      image,
+      discount,
+      count_promotion,
+      status_promotion,
+    );
   }
 }
 
@@ -50,20 +59,19 @@ class _ProductsPage extends State {
       this.id,
       this.name,
       this.description,
-      this.rating,
-      this.countRating,
       this.price,
       this.location,
       this.seller_id,
       this.data,
-      this.image, this.discount, this.count_promotion, this.status_promotion);
+      this.image,
+      this.discount,
+      this.count_promotion,
+      this.status_promotion);
 
   final int accountID;
   final int id;
   final String name;
   final String description;
-  final double rating;
-  final int countRating;
   final int price;
   final String location;
   final int seller_id;
@@ -72,7 +80,11 @@ class _ProductsPage extends State {
   final int discount;
   final int count_promotion;
   final int status_promotion;
+
   int number = 1;
+  int _price;
+  double rating = 3.9;
+  int countRating = 99;
 
   final urlSaveItemToCart = "https://testheroku11111.herokuapp.com/Cart/save";
   final snackBarKey = GlobalKey<ScaffoldState>();
@@ -81,6 +93,17 @@ class _ProductsPage extends State {
       SnackBar(content: Text("เพิ่มสินค้าไปยังรถเข็น สำเร็จ !"));
   final snackBarOnAddItemFall =
       SnackBar(content: Text("เพิ่มสินค้าไปยังรถเข็น ล้มเหลว !"));
+
+  int _sumDiscount;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _price = price;
+    var _discount = discount / 100;
+    _sumDiscount = (price * _discount).toInt();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -178,9 +201,15 @@ class _ProductsPage extends State {
                         ],
                       ),
                       Text(
-                        "฿${price * number}",
+                        "฿${_price * number}",
                         style: TextStyle(
                             fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
+                      Container(
+                        child: status_promotion == 1
+                            ? Text(
+                                "ซื้อครบ ${count_promotion.toString()} รับส่วนลด : ${discount.toString()} %")
+                            : Container(),
                       ),
                       SizedBox(
                         height: 10,
@@ -206,12 +235,21 @@ class _ProductsPage extends State {
                               onPressed: () {
                                 if (number == 1) {
                                   number = 1;
+                                } else if (number <= count_promotion) {
+                                  _price = price;
+                                  setState(() {
+                                    number--;
+                                    print(
+                                        "จำนวน : ${number.toString()} ราตา : ${price.toString()}");
+                                    print(
+                                        "ส่วนลด : ${discount.toString()} % ลดไป : ${_sumDiscount.toString()} บาท เหลือ : ${_price.toString()} บาท");
+                                  });
                                 } else {
                                   setState(() {
                                     number--;
                                   });
                                 }
-                                print(number);
+                                print("จำนวน : ${number.toString()} ราตา : ${price.toString()}");
                               }),
                           Text(
                             "${number.toString()}",
@@ -225,11 +263,24 @@ class _ProductsPage extends State {
                                 size: 30,
                               ),
                               onPressed: () {
-                                setState(() {
-                                  number++;
-                                });
-                                print(number);
-                              }),
+                                if (number >= count_promotion - 1) {
+                                  _price = price - _sumDiscount;
+                                  setState(() {
+                                    number++;
+                                    print(
+                                        "จำนวน : ${number.toString()} ราตา : ${price.toString()}");
+                                    print(
+                                        "ส่วนลด : ${discount.toString()} % ลดไป : ${_sumDiscount.toString()} บาท เหลือ : ${_price.toString()} บาท");
+                                  });
+                                } else {
+                                  setState(() {
+                                    _price = price;
+                                    number++;
+                                    print(
+                                        "จำนวน : ${number.toString()} ราตา : ${_price.toString()}");
+                                  });
+                                }
+                              })
                         ],
                       ),
                       GestureDetector(
@@ -277,7 +328,7 @@ class _ProductsPage extends State {
     Map params = Map();
     params["name"] = name.toString();
     params["number"] = number.toString();
-    params["price"] = price.toString();
+    params["price"] = _price.toString();
     params["customer"] = accountID.toString();
     params["user"] = seller_id.toString();
     params["item"] = id.toString();
@@ -286,7 +337,7 @@ class _ProductsPage extends State {
     print("id product : ${id.toString()}");
     print("name product : ${name.toString()}");
     print("number : ${number.toString()}");
-    print("price : ${price.toString()}");
+    print("price : ${_price.toString()}");
     print("user buy : ${accountID.toString()}");
     print("seller : ${seller_id.toString()}");
     print("Connecting to API ");

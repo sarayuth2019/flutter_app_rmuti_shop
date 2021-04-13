@@ -25,9 +25,6 @@ class _SearchLocation extends State {
 
   List _searchProducts = [];
 
-  int ratingCount = 10;
-  double rating = 3.9;
-
 
   @override
   void initState() {
@@ -76,16 +73,14 @@ class _SearchLocation extends State {
                                   _searchProducts[index].id,
                                   _searchProducts[index].name,
                                   _searchProducts[index].description,
-                                  rating,
-                                  ratingCount,
                                   _searchProducts[index].price,
                                   _searchProducts[index].location,
                                   _searchProducts[index].user_id,
                                   _searchProducts[index].date,
                                   _searchProducts[index].image,
-                                  _searchProducts[index].status_promotion,
-                                  _searchProducts[index].count_promotion,
                                   _searchProducts[index].discount,
+                                  _searchProducts[index].count_promotion,
+                                  _searchProducts[index].status_promotion,
                                 )));
                       },
                       child: Card(

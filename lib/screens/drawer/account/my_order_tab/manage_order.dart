@@ -68,6 +68,8 @@ class _ManageOrder extends State {
   final urlSaveToOrder = "https://testheroku11111.herokuapp.com/Order/save";
   final urlCancelOrder = "https://testheroku11111.herokuapp.com/Order/delete/";
   final snackBarSaveStatusOrderFall = SnackBar(content: Text("ผิดพลาด !"));
+  final snackBarSaveStatusOrderSuccess = SnackBar(content: Text("จัดเตรียมสินค้า สำเร็จ !"));
+  final snackBarCancelOrderSuccess = SnackBar(content: Text("ยกเลิกฮอร์เดอร์ สำเร็จ !"));
   final snackBarOnTab =
       SnackBar(content: Text("กำลังดำเนินการ กรุณารอซักครู่..."));
   int _status = 0;
@@ -273,10 +275,8 @@ class _ManageOrder extends State {
       var statusData = jsonData['status'];
       if (statusData == 1) {
         print("save status ${statusData.toString()} to Order success");
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => AccountPage(accountID)),
-            (route) => false);
+        snackBarKey.currentState.showSnackBar(snackBarSaveStatusOrderSuccess);
+        Navigator.of(context).pop();
       } else {
         print("save status to Order fall");
         snackBarKey.currentState.showSnackBar(snackBarSaveStatusOrderFall);
@@ -291,10 +291,8 @@ class _ManageOrder extends State {
       var statusData = jsonData['status'];
       print("status data : ${statusData.toString()}");
       if (statusData == 1) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => AccountPage(accountID)),
-            (route) => false);
+        snackBarKey.currentState.showSnackBar(snackBarCancelOrderSuccess);
+        Navigator.of(context).pop();
       } else {
         snackBarKey.currentState.showSnackBar(snackBarSaveStatusOrderFall);
       }

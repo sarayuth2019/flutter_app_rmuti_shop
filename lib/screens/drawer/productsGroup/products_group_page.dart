@@ -26,8 +26,6 @@ class _ProductsGroupPage extends State {
   final urlFindByGroup =
       "https://testheroku11111.herokuapp.com/Item/find/group";
   String textGroup;
-  int ratingCount = 10;
-  double rating = 3.9;
 
   @override
   void initState() {
@@ -69,20 +67,18 @@ class _ProductsGroupPage extends State {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ProductsPage(
-                                      accountID,
-                                      snapshot.data[index].id,
-                                      snapshot.data[index].name,
-                                      snapshot.data[index].description,
-                                      rating,
-                                      ratingCount,
-                                      snapshot.data[index].price,
-                                      snapshot.data[index].location,
-                                      snapshot.data[index].user_id,
-                                      snapshot.data[index].date,
-                                      snapshot.data[index].image,
-                                      snapshot.data[index].status_promotion,
-                                      snapshot.data[index].count_promotion,
-                                      snapshot.data[index].discount,
+                                  accountID,
+                                  snapshot.data[index].id,
+                                  snapshot.data[index].name,
+                                  snapshot.data[index].description,
+                                  snapshot.data[index].price,
+                                  snapshot.data[index].location,
+                                  snapshot.data[index].user_id,
+                                  snapshot.data[index].date,
+                                  snapshot.data[index].image,
+                                  snapshot.data[index].discount,
+                                  snapshot.data[index].count_promotion,
+                                  snapshot.data[index].status_promotion,
                                     )));
                       },
                       child: Card(
@@ -119,21 +115,18 @@ class _ProductsGroupPage extends State {
                                       ),
                               ),
                               Flexible(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
                                         "${snapshot.data[index].name}",
                                         style: TextStyle(
-                                            fontSize: 20,
+                                            fontSize: 25,
                                             fontWeight: FontWeight.bold),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
+                                      Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
@@ -156,65 +149,21 @@ class _ProductsGroupPage extends State {
                                                       "รับส่วนลด ${snapshot.data[index].discount} %")
                                                 ],
                                               )
-                                                  : Container())
+                                                  : Container()),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.location_on,
+                                                color: Colors.red,
+                                              ),
+                                              Text(
+                                                  "${snapshot.data[index].location}")
+                                            ],
+                                          )
                                         ],
                                       ),
-                                    ),
-                                    RatingBar.builder(
-                                      ignoreGestures: true,
-                                      allowHalfRating: true,
-                                      itemCount: 5,
-                                      initialRating: rating,
-                                      itemBuilder: (context, r) {
-                                        return Icon(
-                                          Icons.star_rounded,
-                                          color: Colors.amber,
-                                        );
-                                      },
-                                      itemSize: 20,
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Text(
-                                            "(${rating.toString()})",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.blueGrey),
-                                          ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Icon(
-                                            Icons.supervisor_account,
-                                            color: Colors.blue,
-                                          ),
-                                          Text(
-                                            "(${ratingCount.toString()})",
-                                            style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.blueGrey),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            Icons.location_on,
-                                            color: Colors.red,
-                                          ),
-                                          Text(
-                                              "${snapshot.data[index].location}")
-                                        ],
-                                      ),
-                                    )
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               )
                             ],

@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_rmuti_shop/screens/main_tab/products_page.dart';
 
-
 class SearchNameProducts extends StatefulWidget {
   SearchNameProducts(this.accountID, this._listAllProducts);
 
@@ -24,9 +23,6 @@ class _SearchNameProducts extends State {
   final List _listAllProducts;
 
   List _searchProducts = [];
-  int ratingCount = 10;
-  double rating = 3.9;
-
 
   @override
   void initState() {
@@ -71,21 +67,19 @@ class _SearchNameProducts extends State {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ProductsPage(
-                                  accountID,
-                                  _searchProducts[index].id,
-                                  _searchProducts[index].name,
-                                  _searchProducts[index].description,
-                                  rating,
-                                  ratingCount,
-                                  _searchProducts[index].price,
-                                  _searchProducts[index].location,
-                                  _searchProducts[index].user_id,
-                                  _searchProducts[index].date,
-                                  _searchProducts[index].image,
-                                  _searchProducts[index].status_promotion,
-                                  _searchProducts[index].count_promotion,
-                                  _searchProducts[index].discount,
-                                )));
+                                      accountID,
+                                      _searchProducts[index].id,
+                                      _searchProducts[index].name,
+                                      _searchProducts[index].description,
+                                      _searchProducts[index].price,
+                                      _searchProducts[index].location,
+                                      _searchProducts[index].user_id,
+                                      _searchProducts[index].date,
+                                      _searchProducts[index].image,
+                                      _searchProducts[index].discount,
+                                      _searchProducts[index].count_promotion,
+                                      _searchProducts[index].status_promotion,
+                                    )));
                       },
                       child: Card(
                         child: Row(
