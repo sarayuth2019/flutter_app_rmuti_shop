@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_rmuti_shop/screens/main_tab/products_page.dart';
+import 'file:///C:/Users/TopSaga/Desktop/flutter_app_rmuti_shop/lib/screens/main_tab/product_page/products_page.dart';
 
 
 class SearchLocation extends StatefulWidget {

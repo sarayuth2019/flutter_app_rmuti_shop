@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app_rmuti_shop/screens/appBar/cart/my_ordersell_tab/review_page.dart';
 import 'package:http/http.dart' as http;
 
 class MyOrderSellerTab extends StatefulWidget {
@@ -25,7 +26,8 @@ class _MyOrderSellerTab extends State {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(backgroundColor: Colors.blueGrey,
+    return Scaffold(
+      backgroundColor: Colors.blueGrey,
       body: FutureBuilder(
         future: listOrderByCustomer(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -50,7 +52,10 @@ class _MyOrderSellerTab extends State {
                       Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 8,top: 8,),
+                            padding: const EdgeInsets.only(
+                              left: 8,
+                              top: 8,
+                            ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(30),
                               child: Image.memory(
@@ -105,6 +110,24 @@ class _MyOrderSellerTab extends State {
                                                       FontWeight.bold))),
                                 ],
                               ),
+                              Container(
+                                child: snapshot.data[index].status == 1
+                                    ? Center(
+                                        child: TextButton(
+                                          child: Text("ให้คะแนนรีวิว",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold)),
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        ReviewPage(accountID,snapshot.data[index].item_id)));
+                                          },
+                                        ),
+                                      )
+                                    : Container(),
+                              )
                               //RaisedButton(onPressed: () {print(snapshot.data[index].status);})
                             ],
                           ),

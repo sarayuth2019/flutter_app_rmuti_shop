@@ -1,8 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_app_rmuti_shop/screens/main_tab/products_page.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'file:///C:/Users/TopSaga/Desktop/flutter_app_rmuti_shop/lib/screens/main_tab/product_page/products_page.dart';
 import 'package:http/http.dart' as http;
 
 class ProductsGroupPage extends StatefulWidget {
@@ -31,6 +30,7 @@ class _ProductsGroupPage extends State {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print("item product group : ${itemGroup.toString()}");
     setState(() {
       if (itemGroup == 1) {
         textGroup = "Food & Drink";

@@ -258,7 +258,7 @@ class _ManageOrder extends State {
         });
   }
 
-  void _orderSuccess() {
+  void _orderSuccess() async {
     Map params = Map();
     params['id'] = id.toString();
     params['status'] = _status.toString();
@@ -284,8 +284,8 @@ class _ManageOrder extends State {
     });
   }
 
-  void _cancelOrder() {
-    http.get("${urlCancelOrder}${id}").then((res) {
+  void _cancelOrder() async {
+      http.get("${urlCancelOrder}${id}").then((res) {
       print(res.body);
       var jsonData = jsonDecode(res.body);
       var statusData = jsonData['status'];

@@ -189,7 +189,7 @@ class _SingUp extends State {
     }
   }
 
-  void saveToDB (){
+  void saveToDB()async{
     Map params = Map();
     params['email'] = email;
     params['password'] = password;

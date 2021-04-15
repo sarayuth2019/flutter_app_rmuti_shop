@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
-import '../drawer/account/sing_in_up/sing_in_page.dart';
+import '../../drawer/account/sing_in_up/sing_in_page.dart';
 
 class ProductsPage extends StatefulWidget {
   ProductsPage(
@@ -87,6 +87,7 @@ class _ProductsPage extends State {
   int countRating = 99;
 
   final urlSaveItemToCart = "https://testheroku11111.herokuapp.com/Cart/save";
+  final urlReviewByItems = "https://testheroku11111.herokuapp.com/Review/find/Items";
   final snackBarKey = GlobalKey<ScaffoldState>();
   final snackBarOnAddItem = SnackBar(content: Text("เพิ่มสินค้าไปยังรถเข็น"));
   final snackBarOnAddItemSuccess =
@@ -94,15 +95,15 @@ class _ProductsPage extends State {
   final snackBarOnAddItemFall =
       SnackBar(content: Text("เพิ่มสินค้าไปยังรถเข็น ล้มเหลว !"));
 
-  int _sumDiscount;
+  double _sumDiscount;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     _price = price;
-    var _discount = discount / 100;
-    _sumDiscount = (price * _discount).toInt();
+    double _discount = discount / 100;
+    _sumDiscount = (price * _discount);
   }
 
   @override
@@ -200,10 +201,45 @@ class _ProductsPage extends State {
                           )
                         ],
                       ),
-                      Text(
-                        "฿${_price * number}",
-                        style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold),
+                      Container(
+                        child: status_promotion == 1
+                            ? Container(
+                                child: number >= count_promotion
+                                    ? Row(
+                                        children: [
+                                          Text("฿${price * number}",
+                                              style: TextStyle(
+                                                fontSize: 25,
+                                                decoration:
+                                                    TextDecoration.lineThrough,
+                                                decorationThickness: 2,
+                                              )),
+                                          SizedBox(
+                                            width: 20,
+                                          ),
+                                          Text(
+                                            "฿${_price * number}",
+                                            style: TextStyle(
+                                                fontSize: 30,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ],
+                                      )
+                                    : Text(
+                                        "฿${_price * number}",
+                                        style: TextStyle(
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                              )
+                            : Container(
+                                child: Text(
+                                  "฿${_price * number}",
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
                       ),
                       Container(
                         child: status_promotion == 1
@@ -249,7 +285,8 @@ class _ProductsPage extends State {
                                     number--;
                                   });
                                 }
-                                print("จำนวน : ${number.toString()} ราตา : ${price.toString()}");
+                                print(
+                                    "จำนวน : ${number.toString()} ราตา : ${price.toString()}");
                               }),
                           Text(
                             "${number.toString()}",
@@ -264,7 +301,7 @@ class _ProductsPage extends State {
                               ),
                               onPressed: () {
                                 if (number >= count_promotion - 1) {
-                                  _price = price - _sumDiscount;
+                                  _price = (price - _sumDiscount).toInt();
                                   setState(() {
                                     number++;
                                     print(
@@ -323,7 +360,7 @@ class _ProductsPage extends State {
     );
   }
 
-  void _addToCart() {
+  void _addToCart() async {
     snackBarKey.currentState.showSnackBar(snackBarOnAddItem);
     Map params = Map();
     params["name"] = name.toString();

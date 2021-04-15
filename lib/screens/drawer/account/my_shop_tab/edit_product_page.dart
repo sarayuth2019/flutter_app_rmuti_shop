@@ -315,7 +315,7 @@ class _EditProductPage extends State {
     saveToDB();
   }
 
-  void saveToDB() {
+  void saveToDB()async {
     _snackBarKey.currentState.showSnackBar(snackBarOnSave);
     Map params = Map();
     params['id'] = id.toString();

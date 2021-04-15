@@ -395,7 +395,7 @@ class _SellProducts extends State {
     }
   }
 
-  void saveToDB() {
+  void saveToDB() async {
     Map params = Map();
     params['user'] = accountID.toString();
     params['name'] = nameMenu.toString();
