@@ -39,7 +39,7 @@ class _MyShop extends State {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
+    return Scaffold(backgroundColor: Colors.blueGrey,
         key: snackBarKey,
         body: Container(
           child: FutureBuilder(

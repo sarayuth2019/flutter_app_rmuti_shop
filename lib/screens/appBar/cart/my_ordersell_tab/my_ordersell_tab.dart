@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_app_rmuti_shop/screens/appBar/cart/my_ordersell_tab/review_page.dart';
+import 'package:flutter_app_rmuti_shop/screens/appBar/cart/my_ordersell_tab/review_product_page.dart';
 import 'package:http/http.dart' as http;
 
 class MyOrderSellerTab extends StatefulWidget {
@@ -122,7 +122,7 @@ class _MyOrderSellerTab extends State {
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>
-                                                        ReviewPage(accountID,snapshot.data[index].item_id)));
+                                                        ReviewProductPage(accountID,snapshot.data[index].item_id,snapshot.data[index].id)));
                                           },
                                         ),
                                       )
@@ -149,9 +149,9 @@ class _MyOrderSellerTab extends State {
     );
   }
 
-  Future<List<_Products>> listOrderByCustomer() async {
+  Future<List<_Order>> listOrderByCustomer() async {
     Map params = Map();
-    List<_Products> listOrderByCustomer = [];
+    List<_Order> listOrderByCustomer = [];
     params['customer'] = accountID.toString();
     print("connect to Api Order by Customer...");
     await http.post(urlListOrderByCustomer, body: params).then((res) {
@@ -162,7 +162,7 @@ class _MyOrderSellerTab extends State {
 
       for (var p in productsData) {
         print("list Order products...");
-        _Products _products = _Products(
+        _Order _order = _Order(
             p['id'],
             p['status'],
             p['name'],
@@ -173,7 +173,7 @@ class _MyOrderSellerTab extends State {
             p['item'],
             p['date'],
             p['image']);
-        listOrderByCustomer.add(_products);
+        listOrderByCustomer.add(_order);
       }
     });
     print("Order Products length : ${listOrderByCustomer.length}");
@@ -181,7 +181,7 @@ class _MyOrderSellerTab extends State {
   }
 }
 
-class _Products {
+class _Order {
   final int id;
   final int status;
   final String name;
@@ -193,7 +193,7 @@ class _Products {
   final String data;
   final String image;
 
-  _Products(
+  _Order(
     this.id,
     this.status,
     this.name,

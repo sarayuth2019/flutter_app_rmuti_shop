@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_rmuti_shop/screens/drawer/account/account_page.dart';
 import 'package:http/http.dart' as http;
 
 class ManageOrder extends StatefulWidget {
@@ -68,8 +67,10 @@ class _ManageOrder extends State {
   final urlSaveToOrder = "https://testheroku11111.herokuapp.com/Order/save";
   final urlCancelOrder = "https://testheroku11111.herokuapp.com/Order/delete/";
   final snackBarSaveStatusOrderFall = SnackBar(content: Text("ผิดพลาด !"));
-  final snackBarSaveStatusOrderSuccess = SnackBar(content: Text("จัดเตรียมสินค้า สำเร็จ !"));
-  final snackBarCancelOrderSuccess = SnackBar(content: Text("ยกเลิกฮอร์เดอร์ สำเร็จ !"));
+  final snackBarSaveStatusOrderSuccess =
+      SnackBar(content: Text("จัดเตรียมสินค้า สำเร็จ !"));
+  final snackBarCancelOrderSuccess =
+      SnackBar(content: Text("ยกเลิกฮอร์เดอร์ สำเร็จ !"));
   final snackBarOnTab =
       SnackBar(content: Text("กำลังดำเนินการ กรุณารอซักครู่..."));
   int _status = 0;
@@ -77,12 +78,11 @@ class _ManageOrder extends State {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
+    return Scaffold(backgroundColor: Colors.blueGrey,
       key: snackBarKey,
       appBar: AppBar(
         backgroundColor: Colors.orange[600],
-        title:
-            Text("Manage Order ID : ${id.toString()} ${accountID.toString()}"),
+        title: Text("Manage Order ID : ${id.toString()}"),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -92,7 +92,7 @@ class _ManageOrder extends State {
               children: [
                 Text(
                   "สถานะสินค้า : ",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold,color: Colors.white),
                 ),
                 Container(
                     child: status == 1
@@ -128,56 +128,65 @@ class _ManageOrder extends State {
                 ),
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "ชื่อสินค้า : ${name.toString()}",
-                  style: TextStyle(fontSize: 20),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "ชื่อสินค้า : ${name.toString()}",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    Text("จำนวน : ${number.toString()}",
+                        style:
+                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text("ราคาต่อชิ้น : ฿${price.toString()}",
+                        style:
+                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text("รวมเป็นเงิน : ฿${(number * price).toString()}",
+                        style:
+                            TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    Container(
+                      child: status == 1
+                          ? Text("วันเวลาที่สำเร็จ : ${date.toString()}",
+                              style: TextStyle(fontSize: 18))
+                          : Text("วันเวลาที่สั่ง : ${date.toString()}",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            child: Text("สำเร็จ",
+                                style: TextStyle(
+                                    color: Colors.green[700],
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold)),
+                            onPressed: () {
+                              _showAlertOrderSuccess(context);
+                            },
+                          ),
+                          TextButton(
+                            child: Text("ยกเลิกออร์เดอร์",
+                                style: TextStyle(
+                                    color: Colors.red[700],
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold)),
+                            onPressed: () {
+                              _showAlertCancelOrder(context);
+                            },
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
                 ),
-                Text("จำนวน : ${number.toString()}",
-                    style: TextStyle(fontSize: 20)),
-                Text("ราคาต่อชิ้น : ฿${price.toString()}",
-                    style: TextStyle(fontSize: 20)),
-                Text("รวมเป็นเงิน : ฿${(number * price).toString()}",
-                    style: TextStyle(fontSize: 20)),
-                Container(
-                  child: status == 1
-                      ? Text("วันเวลาที่สำเร็จ : ${date.toString()}",
-                          style: TextStyle(fontSize: 18))
-                      : Text("วันเวลาที่สั่ง : ${date.toString()}",
-                          style: TextStyle(fontSize: 18)),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    child: Text("สำเร็จ",
-                        style: TextStyle(
-                            color: Colors.green[700],
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold)),
-                    onPressed: () {
-                      _showAlertOrderSuccess(context);
-                    },
-                  ),
-                  TextButton(
-                    child: Text("ยกเลิกออร์เดอร์",
-                        style: TextStyle(
-                            color: Colors.red[700],
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold)),
-                    onPressed: () {
-                      _showAlertCancelOrder(context);
-                    },
-                  ),
-                ],
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -285,7 +294,7 @@ class _ManageOrder extends State {
   }
 
   void _cancelOrder() async {
-      http.get("${urlCancelOrder}${id}").then((res) {
+    http.get("${urlCancelOrder}${id}").then((res) {
       print(res.body);
       var jsonData = jsonDecode(res.body);
       var statusData = jsonData['status'];

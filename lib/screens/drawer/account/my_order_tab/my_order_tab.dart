@@ -25,7 +25,7 @@ class _MyOrderTab extends State {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
+    return Scaffold(backgroundColor: Colors.blueGrey,
       body: FutureBuilder(
         future: futureListMyOrder(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {

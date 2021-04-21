@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'file:///C:/Users/TopSaga/Desktop/flutter_app_rmuti_shop/lib/screens/main_tab/product_page/products_page.dart';
 import 'package:http/http.dart' as http;
@@ -104,8 +103,8 @@ class _ProductsGroupPage extends State {
                                     : ClipRRect(
                                         borderRadius: BorderRadius.circular(30),
                                         child: Container(
-                                          height: 200,
-                                          width: 200,
+                                          height: 150,
+                                          width: 150,
                                           child: Image.memory(
                                             base64Decode(
                                                 snapshot.data[index].image),

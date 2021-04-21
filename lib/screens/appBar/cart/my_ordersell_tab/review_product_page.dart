@@ -1,42 +1,44 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:http/http.dart'as http;
+import 'package:http/http.dart' as http;
 
-class ReviewPage extends StatefulWidget {
-  ReviewPage(this.accountID, this.item_id);
+class ReviewProductPage extends StatefulWidget {
+  ReviewProductPage(this.accountID, this.item_id, this.order_id);
 
   final int accountID;
   final int item_id;
+  final int order_id;
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _ReviewPage(accountID, item_id);
+    return _ReviewProductPage(accountID, item_id, order_id);
   }
 }
 
-class _ReviewPage extends State {
-  _ReviewPage(this.accountID, this.item_id);
+class _ReviewProductPage extends State {
+  _ReviewProductPage(this.accountID, this.item_id, this.order_id);
 
   final int accountID;
   final int item_id;
+  final int order_id;
   final snackBarKey = GlobalKey<ScaffoldState>();
   final snackBarOnReview = SnackBar(content: Text("กำลังบันทึกการรีวิว..."));
-  final snackBarOnReviewSuccess = SnackBar(content: Text("สำเร็จ ขอบคุณสำหรับการรีวิว !"));
+  final snackBarOnReviewSuccess =
+      SnackBar(content: Text("สำเร็จ ขอบคุณสำหรับการรีวิว !"));
   final snackBarOnReviewFall = SnackBar(content: Text("ผิดพลาด !"));
   final urlSaveReview = "https://testheroku11111.herokuapp.com/Review/save";
+  final urlDeleteOrder = "https://testheroku11111.herokuapp.com/Order/delete/";
   TextEditingController content = TextEditingController();
   double _rating = 1;
-
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
-      key: snackBarKey,
+        key: snackBarKey,
         backgroundColor: Colors.blueGrey,
         appBar: AppBar(
           backgroundColor: Colors.orange[600],
@@ -75,7 +77,8 @@ class _ReviewPage extends State {
                     controller: content,
                     maxLines: null,
                     decoration: InputDecoration(
-                        hintText: "บอกคนอิ่นว่าทำไม 'ถูกใจ' สินค้านี้", border: InputBorder.none),
+                        hintText: "บอกคนอิ่นว่าทำไม 'ถูกใจ' สินค้านี้",
+                        border: InputBorder.none),
                   ),
                 ),
                 ElevatedButton(
@@ -88,7 +91,8 @@ class _ReviewPage extends State {
           ),
         ));
   }
-  void saveReviewToDB()async{
+
+  void saveReviewToDB() async {
     snackBarKey.currentState.showSnackBar(snackBarOnReview);
     print("accountID : ${accountID.toString()}");
     print("item ID : ${item_id.toString()}");
@@ -100,13 +104,14 @@ class _ReviewPage extends State {
     params['items'] = item_id.toString();
     params['rating'] = _rating.toString();
     params['content'] = content.text;
-    await http.post(urlSaveReview,body: params).then((res){
+    await http.post(urlSaveReview, body: params).then((res) {
       print(res.body);
       var jsonDataRes = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
       var statusData = jsonDataRes['status'];
-      if(statusData == 1){
+      if (statusData == 1) {
+        http.get("${urlDeleteOrder}${order_id}");
         snackBarKey.currentState.showSnackBar(snackBarOnReviewSuccess);
-      }else{
+      } else {
         snackBarKey.currentState.showSnackBar(snackBarOnReviewFall);
       }
     });

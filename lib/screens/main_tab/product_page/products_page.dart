@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_rmuti_shop/screens/main_tab/product_page/show_review_page.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 import '../../drawer/account/sing_in_up/sing_in_page.dart';
@@ -81,13 +82,9 @@ class _ProductsPage extends State {
   final int count_promotion;
   final int status_promotion;
 
-  int number = 1;
-  int _price;
-  double rating = 3.9;
-  int countRating = 99;
-
   final urlSaveItemToCart = "https://testheroku11111.herokuapp.com/Cart/save";
-  final urlReviewByItems = "https://testheroku11111.herokuapp.com/Review/find/Items";
+  final urlReviewByItems =
+      "https://testheroku11111.herokuapp.com/Review/find/Items";
   final snackBarKey = GlobalKey<ScaffoldState>();
   final snackBarOnAddItem = SnackBar(content: Text("เพิ่มสินค้าไปยังรถเข็น"));
   final snackBarOnAddItemSuccess =
@@ -95,7 +92,14 @@ class _ProductsPage extends State {
   final snackBarOnAddItemFall =
       SnackBar(content: Text("เพิ่มสินค้าไปยังรถเข็น ล้มเหลว !"));
 
+  int number = 1;
+  int _price;
   double _sumDiscount;
+
+  List _listReview = [];
+  int countRating;
+  double sumRating;
+  double meanRating;
 
   @override
   void initState() {
@@ -170,36 +174,91 @@ class _ProductsPage extends State {
                           Text("${location.toString()}")
                         ],
                       ),
-                      Row(
-                        children: [
-                          Text(
-                            "${rating.toString()}",
-                            style: TextStyle(color: Colors.blue, fontSize: 15),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          RatingBar.builder(
-                            ignoreGestures: true,
-                            allowHalfRating: true,
-                            itemCount: 5,
-                            initialRating: rating,
-                            itemBuilder: (context, r) {
-                              return Icon(
-                                Icons.star_rounded,
-                                color: Colors.amber,
-                              );
-                            },
-                            itemSize: 20,
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "(${countRating.toString()}) ratings",
-                            style: TextStyle(color: Colors.blue, fontSize: 15),
-                          )
-                        ],
+                      FutureBuilder(
+                        future: listReviewByItemID(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<dynamic> snapshot) {
+                          if (snapshot.data == null) {
+                            return Row(
+                              children: [
+                                Text(
+                                  "${0.0}",
+                                  style: TextStyle(
+                                      color: Colors.blue, fontSize: 15),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                RatingBar.builder(
+                                  ignoreGestures: true,
+                                  allowHalfRating: true,
+                                  itemCount: 5,
+                                  initialRating: 0,
+                                  itemBuilder: (context, r) {
+                                    return Icon(
+                                      Icons.star_rounded,
+                                      color: Colors.amber,
+                                    );
+                                  },
+                                  itemSize: 20,
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "(0) ratings",
+                                  style: TextStyle(
+                                      color: Colors.blue, fontSize: 15),
+                                )
+                              ],
+                            );
+                          } else {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ShowReviewPage(
+                                            _listReview,
+                                            meanRating,
+                                            countRating)));
+                              },
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "${meanRating.toStringAsFixed(1)}",
+                                    style: TextStyle(
+                                        color: Colors.blue, fontSize: 15),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  RatingBar.builder(
+                                    ignoreGestures: true,
+                                    allowHalfRating: true,
+                                    itemCount: 5,
+                                    initialRating: meanRating,
+                                    itemBuilder: (context, r) {
+                                      return Icon(
+                                        Icons.star_rounded,
+                                        color: Colors.amber,
+                                      );
+                                    },
+                                    itemSize: 20,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "(${countRating.toString()}) ratings",
+                                    style: TextStyle(
+                                        color: Colors.blue, fontSize: 15),
+                                  )
+                                ],
+                              ),
+                            );
+                          }
+                        },
                       ),
                       Container(
                         child: status_promotion == 1
@@ -360,6 +419,40 @@ class _ProductsPage extends State {
     );
   }
 
+  Future<List<_ReviewData>> listReviewByItemID() async {
+    List<_ReviewData> listReview = [];
+    var _sumRating;
+    Map params = Map();
+
+    params['items'] = id.toString();
+    print("connect to Api Review...");
+    await http.post(urlReviewByItems, body: params).then((res) {
+      print("connect to Api Review Success !");
+      Map jsonData = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
+      var dataReview = jsonData['data'];
+      print(dataReview);
+
+      for (var i in dataReview) {
+        _ReviewData _reviewData = _ReviewData(i['id'], i['items'], i['user'],
+            i['rating'], i['content'], i['date']);
+        listReview.insert(0, _reviewData);
+        print("list review success");
+      }
+      _sumRating = listReview
+          .map((r) => r.rating)
+          .reduce((value, element) => value + element);
+      _listReview = listReview;
+      countRating = listReview.length;
+    });
+    countRating = listReview.length;
+    print("Review length : ${countRating.toString()}");
+    sumRating = _sumRating;
+    print("sum rating : ${sumRating.toString()}");
+    meanRating = sumRating / countRating;
+    print("rating เฉลี่ย : ${meanRating.toString()}");
+    return listReview;
+  }
+
   void _addToCart() async {
     snackBarKey.currentState.showSnackBar(snackBarOnAddItem);
     Map params = Map();
@@ -390,4 +483,16 @@ class _ProductsPage extends State {
       }
     });
   }
+}
+
+class _ReviewData {
+  _ReviewData(this.id, this.item_id, this.user_id, this.rating, this.content,
+      this.date);
+
+  final int id;
+  final int item_id;
+  final int user_id;
+  final double rating;
+  final String content;
+  final String date;
 }

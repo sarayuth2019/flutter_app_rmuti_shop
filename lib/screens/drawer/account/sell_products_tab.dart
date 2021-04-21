@@ -66,7 +66,7 @@ class _SellProducts extends State {
     // TODO: implement build
     return Scaffold(
       key: _snackBarKey,
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.blueGrey,
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -80,7 +80,7 @@ class _SellProducts extends State {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "กรุณากรอกข้อมูลสินค้าให้ครบ",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.white),
                   ),
                 ),
                 Padding(
@@ -122,7 +122,7 @@ class _SellProducts extends State {
                     isExpanded: true,
                     underline: Container(
                       decoration:
-                          BoxDecoration(border: Border.all(color: Colors.grey)),
+                          BoxDecoration(border: Border.all(color: Colors.white)),
                     ),
                     value: location,
                     onChanged: (newValue) {
@@ -144,7 +144,7 @@ class _SellProducts extends State {
                     isExpanded: true,
                     underline: Container(
                       decoration:
-                          BoxDecoration(border: Border.all(color: Colors.grey)),
+                          BoxDecoration(border: Border.all(color: Colors.white)),
                     ),
                     value: _groupItem,
                     onChanged: (newValue) {
@@ -186,15 +186,15 @@ class _SellProducts extends State {
                 ),
                 TextFormField(
                   maxLines: null,
-                  decoration: InputDecoration(hintText: "คำอธิบายสินค้า"),
+                  decoration: InputDecoration(hintText: "คำอธิบาย"),
                   validator: _checkDescription,
                   onSaved: (String text) {
                     description = text;
                   },
                 ),
                 // ignore: deprecated_member_use
-                RaisedButton(
-                    child: Text(textPromotion),
+                RaisedButton(color: Colors.grey,
+                    child: Text(textPromotion,style: TextStyle(color: Colors.white),),
                     onPressed: () {
                       addPromotion(context);
                     }),
@@ -247,8 +247,8 @@ class _SellProducts extends State {
     // ignore: deprecated_member_use
     var _imageGallery = await ImagePicker().getImage(
         source: ImageSource.gallery,
-        maxHeight: 640,
-        maxWidth: 640);
+        maxHeight: 650,
+        maxWidth: 650);
     if (_imageGallery != null) {
       setState(() {
         imageFile = File(_imageGallery.path);
@@ -266,8 +266,8 @@ class _SellProducts extends State {
     // ignore: deprecated_member_use
     var _imageGallery = await ImagePicker().getImage(
         source: ImageSource.camera,
-        maxHeight: 640,
-        maxWidth: 640);
+        maxHeight: 650,
+        maxWidth: 650);
     if (_imageGallery != null) {
       setState(() {
         imageFile = File(_imageGallery.path);

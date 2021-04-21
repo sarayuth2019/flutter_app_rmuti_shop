@@ -88,6 +88,7 @@ class _EditProductPage extends State {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      backgroundColor: Colors.blueGrey,
       key: _snackBarKey,
       appBar: AppBar(
         backgroundColor: Colors.orange[600],
@@ -122,7 +123,8 @@ class _EditProductPage extends State {
               ),
               TextField(
                 controller: _name,
-                decoration: InputDecoration(hintText: name),
+                decoration: InputDecoration(
+                    hintText: "ชื่อสินค้า : ${name.toString()}"),
                 onChanged: (String text) {
                   name = text;
                 },
@@ -130,30 +132,46 @@ class _EditProductPage extends State {
               TextField(
                 controller: _price,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(hintText: price.toString()),
+                decoration:
+                    InputDecoration(hintText: "ราคา : ${price.toString()} บาท"),
                 onChanged: (String num) {
                   price = int.parse(num);
                 },
               ),
               TextField(
                 controller: _description,
-                decoration: InputDecoration(hintText: description),
+                maxLines: null,
+                decoration: InputDecoration(
+                    hintText: "คำอธิบาย : ${description.toString()}"),
                 onChanged: (String text) {
                   description = text;
                 },
               ),
-              Text(
-                "โปรโมชันสินค้าปัจจุบัน",
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+              SizedBox(
+                height: 10,
               ),
-              Text(
-                  "ซื้อสินค้าครบ ${count_promotion.toString()} ชิ้น ได้ส่วนลดของสินค้า ${discount.toString()} %"),
-              // ignore: deprecated_member_use
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "โปรโมชันสินค้าปัจจุบัน",
+                    style: TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.yellowAccent[700]),
+                  ),
+                  Text(
+                    "ซื้อสินค้าครบ ${count_promotion.toString()} ชิ้น ได้ส่วนลดของสินค้า ${discount.toString()} %",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ],
+              ),
               Center(
                 child: RaisedButton(
+                    color: Colors.grey,
                     child: Text(
                       textPromotion,
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(color: Colors.white),
                     ),
                     onPressed: () {
                       addPromotion(context);
@@ -205,10 +223,8 @@ class _EditProductPage extends State {
   _onGallery() async {
     print('Select Gallery');
     // ignore: deprecated_member_use
-    var _imageGallery = await ImagePicker().getImage(
-        source: ImageSource.gallery,
-        maxHeight: 640,
-        maxWidth: 640);
+    var _imageGallery = await ImagePicker()
+        .getImage(source: ImageSource.gallery, maxHeight: 650, maxWidth: 650);
     if (_imageGallery != null) {
       setState(() {
         imageFile = File(_imageGallery.path);
@@ -224,10 +240,8 @@ class _EditProductPage extends State {
   _onCamera() async {
     print('Select Camera');
     // ignore: deprecated_member_use
-    var _imageGallery = await ImagePicker().getImage(
-        source: ImageSource.camera,
-        maxHeight: 640,
-        maxWidth: 640);
+    var _imageGallery = await ImagePicker()
+        .getImage(source: ImageSource.camera, maxHeight: 650, maxWidth: 650);
     if (_imageGallery != null) {
       setState(() {
         imageFile = File(_imageGallery.path);
@@ -315,7 +329,7 @@ class _EditProductPage extends State {
     saveToDB();
   }
 
-  void saveToDB()async {
+  void saveToDB() async {
     _snackBarKey.currentState.showSnackBar(snackBarOnSave);
     Map params = Map();
     params['id'] = id.toString();
