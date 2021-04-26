@@ -77,7 +77,7 @@ class _ReviewProductPage extends State {
                     controller: content,
                     maxLines: null,
                     decoration: InputDecoration(
-                        hintText: "บอกคนอิ่นว่าทำไม 'ถูกใจ' สินค้านี้",
+                        hintText: "บอกคนอื่นว่าทำไม 'ถูกใจ' สินค้านี้",
                         border: InputBorder.none),
                   ),
                 ),

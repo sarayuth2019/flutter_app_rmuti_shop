@@ -28,6 +28,9 @@ class _MyCartTab extends State {
   final urlSaveToOrder = "https://testheroku11111.herokuapp.com/Order/save";
   final urlDeleteProductInCart =
       "https://testheroku11111.herokuapp.com/Cart/delete/";
+  final urlSaveNotify = "https://testheroku11111.herokuapp.com/Notify/save";
+  final urlSaveBackUpNotify = "https://testheroku11111.herokuapp.com/Backup/save";
+
   final snackBarKey = GlobalKey<ScaffoldState>();
   final snackBarOnDelete = SnackBar(content: Text("กำลังลบสินค้า..."));
   final snackBarOnDeleteSuccess =
@@ -242,7 +245,7 @@ class _MyCartTab extends State {
   void saveToOrder()async {
     snackBarKey.currentState.showSnackBar(snackBarSaveToOrder);
     print("Save to Order...");
-    _listProductsCartByCustomer.forEach((element) {
+   _listProductsCartByCustomer.forEach((element) {
       Map params = Map();
       params['name'] = element.name.toString();
       params['number'] = element.number.toString();
@@ -256,6 +259,22 @@ class _MyCartTab extends State {
         Map jsonData = jsonDecode(res.body);
         var statusData = jsonData['status'];
         if (statusData == 1) {
+          var statusText = "มีคนสั่งรายการสินค้าของท่าน";
+          Map _params = Map();
+          _params['name'] = element.name.toString();
+          _params['number'] = element.number.toString();
+          _params['price'] = element.price.toString();
+          _params['status'] = statusText.toString();
+          _params['user'] = element.seller_id.toString();
+          _params['item'] = element.item_id.toString();
+          _params['image'] = element.image.toString();
+          print("save notify...");
+          http.post(urlSaveNotify,body: _params).then((res){
+            print("save notify success !");
+          });
+          http.post(urlSaveBackUpNotify,body: _params).then((res){
+            print("save BackUp notify success !");
+          });
           snackBarKey.currentState.showSnackBar(snackBarSaveToOrderSuccess);
           http.get("${urlDeleteProductInCart}${element.id}").then((res) {
             var jsonData = jsonDecode(res.body);

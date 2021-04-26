@@ -86,18 +86,18 @@ class _AllProductsPage extends State {
                                               )),
                                         )
                                       : ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          child: Container(
-                                            height: 150,
-                                            width: 150,
-                                            child: Image.memory(
-                                              base64Decode(
-                                                  snapshot.data[index].image),
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                        ),
+                                  borderRadius:
+                                  BorderRadius.circular(30),
+                                  child: Container(
+                                    height: 150,
+                                    width: 150,
+                                    child: Image.memory(
+                                      base64Decode(
+                                          snapshot.data[index].image),
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
+                                ),
                                 ),
                                 Flexible(
                                   child: Padding(

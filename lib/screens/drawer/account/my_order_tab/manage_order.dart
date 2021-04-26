@@ -66,6 +66,9 @@ class _ManageOrder extends State {
   final snackBarKey = GlobalKey<ScaffoldState>();
   final urlSaveToOrder = "https://testheroku11111.herokuapp.com/Order/save";
   final urlCancelOrder = "https://testheroku11111.herokuapp.com/Order/delete/";
+  final urlSaveNotify = "https://testheroku11111.herokuapp.com/Notify/save";
+  final urlSaveBackUpNotify = "https://testheroku11111.herokuapp.com/Backup/save";
+
   final snackBarSaveStatusOrderFall = SnackBar(content: Text("ผิดพลาด !"));
   final snackBarSaveStatusOrderSuccess =
       SnackBar(content: Text("จัดเตรียมสินค้า สำเร็จ !"));
@@ -214,7 +217,7 @@ class _ManageOrder extends State {
                               _status = 1;
                               print("status order : ${_status.toString()}");
                             });
-                            _orderSuccess();
+                            _saveOrderSuccess();
                           })),
                   SizedBox(
                     height: 10,
@@ -267,7 +270,7 @@ class _ManageOrder extends State {
         });
   }
 
-  void _orderSuccess() async {
+  void _saveOrderSuccess() async {
     Map params = Map();
     params['id'] = id.toString();
     params['status'] = _status.toString();
@@ -283,6 +286,22 @@ class _ManageOrder extends State {
       Map jsonData = jsonDecode(res.body);
       var statusData = jsonData['status'];
       if (statusData == 1) {
+        var statusText = "จัดเตรียมรายการสินค้าของท่าน สำเร็จ";
+        Map _params = Map();
+        _params['name'] = name.toString();
+        _params['number'] = number.toString();
+        _params['price'] = price.toString();
+        _params['status'] = statusText.toString();
+        _params['user'] = customer_id.toString();
+        _params['item'] = item_id.toString();
+        _params['image'] = image.toString();
+        print("save notify...");
+        http.post(urlSaveNotify,body: _params).then((res){
+          print("save notify success !");
+        });
+        http.post(urlSaveBackUpNotify,body: _params).then((res){
+          print("save BackUp notify success !");
+        });
         print("save status ${statusData.toString()} to Order success");
         snackBarKey.currentState.showSnackBar(snackBarSaveStatusOrderSuccess);
         Navigator.of(context).pop();
@@ -300,6 +319,22 @@ class _ManageOrder extends State {
       var statusData = jsonData['status'];
       print("status data : ${statusData.toString()}");
       if (statusData == 1) {
+        var statusText = "สินค้าหมด";
+        Map _params = Map();
+        _params['name'] = name.toString();
+        _params['number'] = number.toString();
+        _params['price'] = price.toString();
+        _params['status'] = statusText.toString();
+        _params['user'] = customer_id.toString();
+        _params['item'] = item_id.toString();
+        _params['image'] = image.toString();
+        print("save notify...");
+        http.post(urlSaveNotify,body: _params).then((res){
+          print("save notify success !");
+        });
+        http.post(urlSaveBackUpNotify,body: _params).then((res){
+          print("save BackUp notify success !");
+        });
         snackBarKey.currentState.showSnackBar(snackBarCancelOrderSuccess);
         Navigator.of(context).pop();
       } else {

@@ -1,23 +1,23 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_app_rmuti_shop/screens/appBar/cart/my_ordersell_tab/review_product_page.dart';
+import 'package:flutter_app_rmuti_shop/screens/appBar/cart/my_order_customer_tab/review_product_page.dart';
 import 'package:http/http.dart' as http;
 
-class MyOrderSellerTab extends StatefulWidget {
-  MyOrderSellerTab(this.accountID);
+class MyOrderCustomerTab extends StatefulWidget {
+  MyOrderCustomerTab(this.accountID);
 
   final int accountID;
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _MyOrderSellerTab(accountID);
+    return _MyOrderCustomerTab(accountID);
   }
 }
 
-class _MyOrderSellerTab extends State {
-  _MyOrderSellerTab(this.accountID);
+class _MyOrderCustomerTab extends State {
+  _MyOrderCustomerTab(this.accountID);
 
   final int accountID;
   final urlListOrderByCustomer =
@@ -92,7 +92,7 @@ class _MyOrderSellerTab extends State {
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("${snapshot.data[index].data}"),
+                              Text("${snapshot.data[index].date}"),
                               Row(
                                 children: [
                                   Text("สถานะสินค้า : "),
@@ -190,7 +190,7 @@ class _Order {
   final int customer_id;
   final int seller_id;
   final int item_id;
-  final String data;
+  final String date;
   final String image;
 
   _Order(
@@ -202,7 +202,7 @@ class _Order {
     this.customer_id,
     this.seller_id,
     this.item_id,
-    this.data,
+    this.date,
     this.image,
   );
 }

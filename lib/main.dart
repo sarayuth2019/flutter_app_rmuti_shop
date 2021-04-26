@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app_rmuti_shop/screens/appBar/notify/notify_count.dart';
+import 'package:flutter_app_rmuti_shop/screens/appBar/notify/notify_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/appBar/cart/cart_page.dart';
-import 'screens/appBar/promotion/promotion_page.dart';
 import 'screens/appBar/search/search_page.dart';
 import 'screens/drawer/account/account_page.dart';
 import 'screens/drawer/account/sing_in_up/sing_in_page.dart';
@@ -11,7 +11,8 @@ import 'screens/drawer/location/location_page.dart';
 import 'screens/drawer/productsGroup/products_group_page.dart';
 import 'screens/main_tab/all_deals.dart';
 import 'screens/main_tab/all_products.dart';
-import 'screens/main_tab/cart_count.dart';
+import 'screens/appBar/cart/cart_count.dart';
+import 'package:http/http.dart' as http;
 
 void main() =>
     runApp(MaterialApp(debugShowCheckedModeBanner: false, home: HomePage()));
@@ -30,6 +31,8 @@ class _HomePage extends State {
   _HomePage();
 
   int accountID;
+  final urlDeleteNotify =
+      "https://testheroku11111.herokuapp.com/Notify/delete/user";
 
   @override
   void initState() {
@@ -76,7 +79,7 @@ class _HomePage extends State {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          CartPage(accountID)));
+                                          CartPage(accountID,0)));
                         }),
                     Positioned(
                         top: 0,
@@ -94,13 +97,28 @@ class _HomePage extends State {
                 child: Stack(
                   children: [
                     IconButton(
-                        icon: Icon(Icons.notifications_on),
+                        icon: Icon(Icons.notifications_active),
                         onPressed: () {
+                          accountID == null
+                              ? Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => SingIn()))
+                              : deleteNotify();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PromotionPage()));
+                                  builder: (context) => NotifyPage(accountID)));
                         }),
+                    Positioned(
+                        top: 0,
+                        right: 0,
+                        child: accountID == null
+                            ? Container(
+                                height: 17,
+                                width: 17,
+                              )
+                            : Center(child: NotifyCount(accountID)))
                   ],
                 ),
               ),
@@ -205,7 +223,7 @@ class _HomePage extends State {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            CartPage(accountID)));
+                                            CartPage(accountID,0)));
                           },
                           child: Card(
                             color: Colors.orange[600],
@@ -311,7 +329,7 @@ class _HomePage extends State {
                     padding: const EdgeInsets.only(top: 8, bottom: 8),
                     child: Container(
                       child: GestureDetector(
-                        onTap:logout,
+                        onTap: logout,
                         child: Card(
                           color: Colors.orange[600],
                           child: ListTile(
@@ -355,9 +373,17 @@ class _HomePage extends State {
     final SharedPreferences _accountID = await SharedPreferences.getInstance();
     _accountID.clear();
     print("account logout ! ${_accountID.toString()}");
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-          (route) => false);
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
+  }
+
+  void deleteNotify() async {
+    Map params = Map();
+    params['user'] = accountID.toString();
+    print("delete notify...");
+    http.post(urlDeleteNotify,body: params).then((res) {
+      print(res.body);
+      print("delete notify success !");
+    });
   }
 }

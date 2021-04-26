@@ -1,26 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_rmuti_shop/screens/appBar/cart/my_cart_tab.dart';
-import 'file:///C:/Users/TopSaga/Desktop/flutter_app_rmuti_shop/lib/screens/appBar/cart/my_ordersell_tab/my_ordersell_tab.dart';
+import 'package:flutter_app_rmuti_shop/screens/appBar/cart/my_order_customer_tab/my_order_customer_tab.dart';
 
 
 class CartPage extends StatefulWidget {
-  CartPage(this.accountID);
+  CartPage(this.accountID, this.tab);
 
   final accountID;
-
+  final int tab;
 
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _CartPage(accountID);
+    return _CartPage(accountID,tab);
   }
 }
 
 class _CartPage extends State {
-  _CartPage(this.accountID);
+  _CartPage(this.accountID,this._tab);
 
   final accountID;
+  int _tab = 0;
 
 
   @override
@@ -46,10 +47,10 @@ class _CartPage extends State {
           ),
         ),
         body: TabBarView(
-          children: [MyCartTab(accountID), MyOrderSellerTab(accountID)],
+          children: [MyCartTab(accountID), MyOrderCustomerTab(accountID)],
         ),
       ),
-      initialIndex: 0,
+      initialIndex: _tab,
       length: 2,
     );
   }
