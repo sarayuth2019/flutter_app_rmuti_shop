@@ -99,6 +99,7 @@ class _SearchLocation extends State {
                               ),
                             ),
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   "${_searchProducts[index].name}",

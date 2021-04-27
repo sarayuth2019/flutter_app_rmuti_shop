@@ -312,11 +312,11 @@ class _ProductsPage extends State {
                       Text(
                         "Description",
                         style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                       Text(
                         "${description.toString()}",
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(fontSize: 16),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

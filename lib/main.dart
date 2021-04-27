@@ -12,7 +12,6 @@ import 'screens/drawer/productsGroup/products_group_page.dart';
 import 'screens/main_tab/all_deals.dart';
 import 'screens/main_tab/all_products.dart';
 import 'screens/appBar/cart/cart_count.dart';
-import 'package:http/http.dart' as http;
 
 void main() =>
     runApp(MaterialApp(debugShowCheckedModeBanner: false, home: HomePage()));
@@ -31,8 +30,6 @@ class _HomePage extends State {
   _HomePage();
 
   int accountID;
-  final urlDeleteNotify =
-      "https://testheroku11111.herokuapp.com/Notify/delete/user";
 
   @override
   void initState() {
@@ -79,7 +76,7 @@ class _HomePage extends State {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          CartPage(accountID,0)));
+                                          CartPage(accountID, 0)));
                         }),
                     Positioned(
                         top: 0,
@@ -104,11 +101,11 @@ class _HomePage extends State {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => SingIn()))
-                              : deleteNotify();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => NotifyPage(accountID)));
+                              : Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          NotifyPage(accountID)));
                         }),
                     Positioned(
                         top: 0,
@@ -223,7 +220,7 @@ class _HomePage extends State {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            CartPage(accountID,0)));
+                                            CartPage(accountID, 0)));
                           },
                           child: Card(
                             color: Colors.orange[600],
@@ -375,15 +372,5 @@ class _HomePage extends State {
     print("account logout ! ${_accountID.toString()}");
     Navigator.pushAndRemoveUntil(context,
         MaterialPageRoute(builder: (context) => HomePage()), (route) => false);
-  }
-
-  void deleteNotify() async {
-    Map params = Map();
-    params['user'] = accountID.toString();
-    print("delete notify...");
-    http.post(urlDeleteNotify,body: params).then((res) {
-      print(res.body);
-      print("delete notify success !");
-    });
   }
 }

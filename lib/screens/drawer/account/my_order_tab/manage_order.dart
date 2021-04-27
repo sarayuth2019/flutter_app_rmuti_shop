@@ -102,7 +102,7 @@ class _ManageOrder extends State {
                         ? Text(
                             "สำเร็จ",
                             style: TextStyle(
-                                color: Colors.green[700],
+                                color: Colors.greenAccent[400],
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold),
                           )
@@ -164,7 +164,7 @@ class _ManageOrder extends State {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextButton(
-                            child: Text("สำเร็จ",
+                            child: Text("จัดเตรียมสำเร็จ",
                                 style: TextStyle(
                                     color: Colors.green[700],
                                     fontSize: 20,
@@ -174,7 +174,7 @@ class _ManageOrder extends State {
                             },
                           ),
                           TextButton(
-                            child: Text("ยกเลิกออร์เดอร์",
+                            child: Text("สินค้าหมด",
                                 style: TextStyle(
                                     color: Colors.red[700],
                                     fontSize: 20,
@@ -286,7 +286,7 @@ class _ManageOrder extends State {
       Map jsonData = jsonDecode(res.body);
       var statusData = jsonData['status'];
       if (statusData == 1) {
-        var statusText = "จัดเตรียมรายการสินค้าของท่าน สำเร็จ";
+        var statusText = "จัดเตรียมสินค้า สำเร็จ";
         Map _params = Map();
         _params['name'] = name.toString();
         _params['number'] = number.toString();

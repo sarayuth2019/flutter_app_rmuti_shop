@@ -24,6 +24,15 @@ class _NotifyPage extends State {
   final int accountID;
   final urlListNotifyByUser =
       "https://testheroku11111.herokuapp.com/Backup/list/user";
+  final urlDeleteNotify =
+      "https://testheroku11111.herokuapp.com/Notify/delete/user";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    deleteNotify();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +88,7 @@ class _NotifyPage extends State {
                                 children: [
                                   Container(
                                       child: snapshot.data[index].status ==
-                                              "จัดเตรียมรายการสินค้าของท่าน สำเร็จ"
+                                              "จัดเตรียมสินค้า สำเร็จ"
                                           ? Row(
                                               children: [
                                                 Text(
@@ -122,7 +131,7 @@ class _NotifyPage extends State {
                                           : Container()),
                                   Container(
                                       child: snapshot.data[index].status ==
-                                              "ยกเลิกรายการสินค้า"
+                                              "สินค้าหมด"
                                           ? Row(
                                               children: [
                                                 Text(
@@ -182,6 +191,15 @@ class _NotifyPage extends State {
     });
     print("notify length : ${listNotifyByUser.length}");
     return listNotifyByUser;
+  }
+  void deleteNotify() async {
+    Map params = Map();
+    params['user'] = accountID.toString();
+    print("delete notify...");
+    http.post(urlDeleteNotify,body: params).then((res) {
+      print(res.body);
+      print("delete notify success !");
+    });
   }
 }
 
