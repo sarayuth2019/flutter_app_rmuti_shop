@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'package:http/http.dart' as http;
 
 class CartCount extends StatefulWidget {
@@ -20,7 +21,7 @@ class _CartCount extends State {
 
   final int accountID;
   final urlCartByCustomer =
-      "https://testheroku11111.herokuapp.com/Cart/find/customer";
+      "${Config.API_URL}/Cart/find/customer";
   int _countCart = 0;
 
   @override

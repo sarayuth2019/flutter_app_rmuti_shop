@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'file:///C:/Users/TopSaga/Desktop/flutter_app_rmuti_shop/lib/screens/main_tab/product_page/products_page.dart';
 import 'package:http/http.dart' as http;
 
@@ -22,7 +23,7 @@ class _ProductsGroupPage extends State {
   final int accountID;
   final int itemGroup;
   final urlFindByGroup =
-      "https://testheroku11111.herokuapp.com/Item/find/group";
+      "${Config.API_URL}/Item/find/group";
   String textGroup;
 
   @override

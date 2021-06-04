@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'file:///C:/Users/TopSaga/Desktop/flutter_app_rmuti_shop/lib/screens/main_tab/product_page/products_page.dart';
 import 'package:http/http.dart'as http;
 
@@ -17,7 +18,7 @@ class AllDealsPage extends StatefulWidget {
 class _AllDealsPage extends State {
   _AllDealsPage(this.accountID);
   final int accountID;
-  final urlListAllDealsProducts = "https://testheroku11111.herokuapp.com/Item/find/status";
+  final urlListAllDealsProducts = "${Config.API_URL}/Item/find/status";
   final statusPromotion = 1;
 
 

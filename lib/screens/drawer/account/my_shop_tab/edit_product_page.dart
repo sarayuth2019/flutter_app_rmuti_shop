@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
@@ -75,7 +76,7 @@ class _EditProductPage extends State {
       SnackBar(content: Text("กำลังแก้ไขสินค้า กรุณารอซักครู่..."));
   final snackBarOnSaveSuccess = SnackBar(content: Text("แก้ไขสินค้า สำเร็จ !"));
   final snackBarSaveFail = SnackBar(content: Text("แก้ไขสินค้า ล้มเหลว !"));
-  final urlSellProducts = "https://testheroku11111.herokuapp.com/Item/save";
+  final urlSellProducts = "${Config.API_URL}/Item/save";
   String textPromotion = "แก้ไขโปรโมชันสินค้า";
 
   TextEditingController _name = TextEditingController();

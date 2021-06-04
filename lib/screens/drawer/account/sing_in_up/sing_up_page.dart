@@ -1,10 +1,9 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'package:http/http.dart'as http;
-
 import 'sing_in_page.dart';
 
 
@@ -18,7 +17,7 @@ class SingUp extends StatefulWidget {
 }
 
 class _SingUp extends State {
-  final urlSingUp = "https://testheroku11111.herokuapp.com/Register/register";
+  final urlSingUp = "${Config.API_URL}/Register/register";
   final _formKey = GlobalKey<FormState>();
   final _snackBarKey = GlobalKey<ScaffoldState>();
   final singUpSnackBar =

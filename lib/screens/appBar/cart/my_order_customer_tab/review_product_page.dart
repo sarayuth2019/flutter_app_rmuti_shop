@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 
@@ -29,8 +30,8 @@ class _ReviewProductPage extends State {
   final snackBarOnReviewSuccess =
       SnackBar(content: Text("สำเร็จ ขอบคุณสำหรับการรีวิว !"));
   final snackBarOnReviewFall = SnackBar(content: Text("ผิดพลาด !"));
-  final urlSaveReview = "https://testheroku11111.herokuapp.com/Review/save";
-  final urlDeleteOrder = "https://testheroku11111.herokuapp.com/Order/delete/";
+  final urlSaveReview = "${Config.API_URL}/Review/save";
+  final urlDeleteOrder = "${Config.API_URL}/Order/delete/";
   TextEditingController content = TextEditingController();
   double _rating = 1;
 

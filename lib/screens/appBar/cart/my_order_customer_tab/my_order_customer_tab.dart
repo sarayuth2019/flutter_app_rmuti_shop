@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'package:flutter_app_rmuti_shop/screens/appBar/cart/my_order_customer_tab/review_product_page.dart';
 import 'package:http/http.dart' as http;
 
@@ -21,7 +22,7 @@ class _MyOrderCustomerTab extends State {
 
   final int accountID;
   final urlListOrderByCustomer =
-      "https://testheroku11111.herokuapp.com/Order/find/customer";
+      "${Config.API_URL}/Order/find/customer";
 
   @override
   Widget build(BuildContext context) {

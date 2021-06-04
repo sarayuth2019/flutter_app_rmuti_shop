@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'package:http/http.dart'as http;
 
 
@@ -20,7 +21,7 @@ class _NotifyCount extends State {
   _NotifyCount(this.accountID);
   final int accountID;
   final urlNotifyByUser =
-      "https://testheroku11111.herokuapp.com/Notify/list/user";
+      "${Config.API_URL}/Notify/list/user";
   int _notifyCount = 0;
 
   @override

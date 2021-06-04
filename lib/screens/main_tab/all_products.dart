@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'file:///C:/Users/TopSaga/Desktop/flutter_app_rmuti_shop/lib/screens/main_tab/product_page/products_page.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +20,7 @@ class _AllProductsPage extends State {
   _AllProductsPage();
 
   int accountID;
-  final urlListAllProducts = "https://testheroku11111.herokuapp.com/Item/list";
+  final urlListAllProducts = "${Config.API_URL}/Item/list";
 
   @override
   void initState() {

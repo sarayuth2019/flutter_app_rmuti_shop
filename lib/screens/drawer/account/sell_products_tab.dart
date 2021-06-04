@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,7 +24,7 @@ class _SellProducts extends State {
   final accountID;
   final _formKey = GlobalKey<FormState>();
   final _snackBarKey = GlobalKey<ScaffoldState>();
-  final urlSellProducts = "https://testheroku11111.herokuapp.com/Item/save";
+  final urlSellProducts = "${Config.API_URL}/Item/save";
   final snackBarOnSave =
       SnackBar(content: Text("กำลังขายลงขาย กรุณารอซักครู่..."));
   final snackBarOnSaveSuccess = SnackBar(content: Text("ลงขายสินค้า สำเร็จ !"));

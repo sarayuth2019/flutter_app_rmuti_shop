@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'package:flutter_app_rmuti_shop/screens/drawer/account/my_order_tab/manage_order.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,12 +21,13 @@ class _MyOrderTab extends State {
   _MyOrderTab(this.accountID);
 
   final int accountID;
-  final urlMyOrder = "https://testheroku11111.herokuapp.com/Order/find/user";
+  final urlMyOrder = "${Config.API_URL}/Order/find/user";
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(backgroundColor: Colors.blueGrey,
+    return Scaffold(
+      backgroundColor: Colors.blueGrey,
       body: FutureBuilder(
         future: futureListMyOrder(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -114,35 +116,47 @@ class _MyOrderTab extends State {
                                             )),
                                 ],
                               ),
-                              Center(
-                                child: TextButton(
-                                  child: Text(
-                                    "จัดการออร์เดอร์",
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ManageOrder(
-                                                  accountID,
-                                                  snapshot.data[index].id,
-                                                  snapshot.data[index].status,
-                                                  snapshot.data[index].name,
-                                                  snapshot.data[index].number,
-                                                  snapshot.data[index].price,
-                                                  snapshot
-                                                      .data[index].customer_id,
-                                                  snapshot
-                                                      .data[index].seller_id,
-                                                  snapshot.data[index].item_id,
-                                                  snapshot.data[index].date,
-                                                  snapshot.data[index].image,
-                                                )));
-                                  },
-                                ),
-                              )
+                              Container(
+                                  child: snapshot.data[index].status == 0
+                                      ? Center(
+                                          child: TextButton(
+                                            child: Text(
+                                              "จัดการออร์เดอร์",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          ManageOrder(
+                                                            accountID,
+                                                            snapshot
+                                                                .data[index].id,
+                                                            snapshot.data[index]
+                                                                .status,
+                                                            snapshot.data[index]
+                                                                .name,
+                                                            snapshot.data[index]
+                                                                .number,
+                                                            snapshot.data[index]
+                                                                .price,
+                                                            snapshot.data[index]
+                                                                .customer_id,
+                                                            snapshot.data[index]
+                                                                .seller_id,
+                                                            snapshot.data[index]
+                                                                .item_id,
+                                                            snapshot.data[index]
+                                                                .date,
+                                                            snapshot.data[index]
+                                                                .image,
+                                                          )));
+                                            },
+                                          ),
+                                        )
+                                      : Container())
                             ],
                           ),
                           trailing: Column(

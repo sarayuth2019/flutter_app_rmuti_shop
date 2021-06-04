@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'package:flutter_app_rmuti_shop/screens/main_tab/product_page/show_review_page.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
@@ -82,9 +83,9 @@ class _ProductsPage extends State {
   final int count_promotion;
   final int status_promotion;
 
-  final urlSaveItemToCart = "https://testheroku11111.herokuapp.com/Cart/save";
+  final urlSaveItemToCart = "${Config.API_URL}/Cart/save";
   final urlReviewByItems =
-      "https://testheroku11111.herokuapp.com/Review/find/Items";
+      "${Config.API_URL}/Review/find/Items";
   final snackBarKey = GlobalKey<ScaffoldState>();
   final snackBarOnAddItem = SnackBar(content: Text("เพิ่มสินค้าไปยังรถเข็น"));
   final snackBarOnAddItemSuccess =

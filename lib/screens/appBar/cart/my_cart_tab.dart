@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'package:flutter_app_rmuti_shop/main.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,12 +25,12 @@ class _MyCartTab extends State {
 
   final int accountID;
   final urlCartByCustomer =
-      "https://testheroku11111.herokuapp.com/Cart/find/customer";
-  final urlSaveToOrder = "https://testheroku11111.herokuapp.com/Order/save";
+      "${Config.API_URL}/Cart/find/customer";
+  final urlSaveToOrder = "${Config.API_URL}/Order/save";
   final urlDeleteProductInCart =
-      "https://testheroku11111.herokuapp.com/Cart/delete/";
-  final urlSaveNotify = "https://testheroku11111.herokuapp.com/Notify/save";
-  final urlSaveBackUpNotify = "https://testheroku11111.herokuapp.com/Backup/save";
+      "${Config.API_URL}/Cart/delete/";
+  final urlSaveNotify = "${Config.API_URL}/Notify/save";
+  final urlSaveBackUpNotify = "${Config.API_URL}/Backup/save";
 
   final snackBarKey = GlobalKey<ScaffoldState>();
   final snackBarOnDelete = SnackBar(content: Text("กำลังลบสินค้า..."));

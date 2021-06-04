@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'package:http/http.dart' as http;
 
 class ManageOrder extends StatefulWidget {
@@ -64,10 +65,10 @@ class _ManageOrder extends State {
   final String image;
 
   final snackBarKey = GlobalKey<ScaffoldState>();
-  final urlSaveToOrder = "https://testheroku11111.herokuapp.com/Order/save";
-  final urlCancelOrder = "https://testheroku11111.herokuapp.com/Order/delete/";
-  final urlSaveNotify = "https://testheroku11111.herokuapp.com/Notify/save";
-  final urlSaveBackUpNotify = "https://testheroku11111.herokuapp.com/Backup/save";
+  final urlSaveToOrder = "${Config.API_URL}/Order/save";
+  final urlCancelOrder = "${Config.API_URL}/Order/delete/";
+  final urlSaveNotify = "${Config.API_URL}/Notify/save";
+  final urlSaveBackUpNotify = "${Config.API_URL}/Backup/save";
 
   final snackBarSaveStatusOrderFall = SnackBar(content: Text("ผิดพลาด !"));
   final snackBarSaveStatusOrderSuccess =

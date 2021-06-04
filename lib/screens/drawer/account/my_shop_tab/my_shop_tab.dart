@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'package:flutter_app_rmuti_shop/screens/drawer/account/my_shop_tab/edit_product_page.dart';
 import 'package:http/http.dart' as http;
 
@@ -25,9 +26,9 @@ class _MyShop extends State {
   final snackBarDeleteSuccess = SnackBar(content: Text("ลบสินค้าสำเร็จ !"));
   final snackBarDeleteFall = SnackBar(content: Text("ลบสินค้าผิดพลาด !"));
   final urlListItemByUser =
-      "https://testheroku11111.herokuapp.com/Item/find/user";
+      "${Config.API_URL}/Item/find/user";
   final urlDeleteProducts =
-      "https://testheroku11111.herokuapp.com/Item/delete/";
+      "${Config.API_URL}/Item/delete/";
 
   @override
   void initState() {

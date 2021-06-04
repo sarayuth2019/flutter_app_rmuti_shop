@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'package:flutter_app_rmuti_shop/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +21,8 @@ class _SingIn extends State {
       SnackBar(content: Text("กำลังเข้าสู้ระบบ กรุณารอซักครู่..."));
   final snackBarSingInFail =
       SnackBar(content: Text("กรุณาตรวจสอบ Email หรือ Password"));
-  final urlSingIn = "https://testheroku11111.herokuapp.com/User/Login";
+  final urlSingIn = "${Config.API_URL}/User/Login";
+
   int accountID;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();

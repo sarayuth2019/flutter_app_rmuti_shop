@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app_rmuti_shop/Config/config.dart';
 import 'package:flutter_app_rmuti_shop/screens/appBar/cart/cart_page.dart';
 import 'package:flutter_app_rmuti_shop/screens/drawer/account/account_page.dart';
 import 'package:http/http.dart' as http;
@@ -23,9 +24,9 @@ class _NotifyPage extends State {
 
   final int accountID;
   final urlListNotifyByUser =
-      "https://testheroku11111.herokuapp.com/Backup/list/user";
+      "${Config.API_URL}/Backup/list/user";
   final urlDeleteNotify =
-      "https://testheroku11111.herokuapp.com/Notify/delete/user";
+      "${Config.API_URL}/Notify/delete/user";
 
   @override
   void initState() {
@@ -55,7 +56,7 @@ class _NotifyPage extends State {
                   return GestureDetector(
                     onTap: () {
                       if (snapshot.data[index].status ==
-                          "จัดเตรียมรายการสินค้าของท่าน สำเร็จ") {
+                          "จัดเตรียมสินค้า สำเร็จ") {
                         Navigator.push(
                             context,
                             (MaterialPageRoute(
