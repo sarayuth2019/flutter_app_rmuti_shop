@@ -81,7 +81,10 @@ class _SellProducts extends State {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     "กรุณากรอกข้อมูลสินค้าให้ครบ",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold,color: Colors.white),
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
                   ),
                 ),
                 Padding(
@@ -122,8 +125,8 @@ class _SellProducts extends State {
                     hint: Text("เลือกสถานที่"),
                     isExpanded: true,
                     underline: Container(
-                      decoration:
-                          BoxDecoration(border: Border.all(color: Colors.white)),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white)),
                     ),
                     value: location,
                     onChanged: (newValue) {
@@ -144,8 +147,8 @@ class _SellProducts extends State {
                     hint: Text("เลือกประเภทของสินค้า"),
                     isExpanded: true,
                     underline: Container(
-                      decoration:
-                          BoxDecoration(border: Border.all(color: Colors.white)),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white)),
                     ),
                     value: _groupItem,
                     onChanged: (newValue) {
@@ -194,8 +197,12 @@ class _SellProducts extends State {
                   },
                 ),
                 // ignore: deprecated_member_use
-                RaisedButton(color: Colors.grey,
-                    child: Text(textPromotion,style: TextStyle(color: Colors.white),),
+                RaisedButton(
+                    color: Colors.grey,
+                    child: Text(
+                      textPromotion,
+                      style: TextStyle(color: Colors.white),
+                    ),
                     onPressed: () {
                       addPromotion(context);
                     }),
@@ -246,10 +253,8 @@ class _SellProducts extends State {
   _onGallery() async {
     print('Select Gallery');
     // ignore: deprecated_member_use
-    var _imageGallery = await ImagePicker().getImage(
-        source: ImageSource.gallery,
-        maxHeight: 650,
-        maxWidth: 650);
+    var _imageGallery = await ImagePicker()
+        .getImage(source: ImageSource.gallery, maxHeight: 1920, maxWidth: 1080);
     if (_imageGallery != null) {
       setState(() {
         imageFile = File(_imageGallery.path);
@@ -265,10 +270,8 @@ class _SellProducts extends State {
   _onCamera() async {
     print('Select Camera');
     // ignore: deprecated_member_use
-    var _imageGallery = await ImagePicker().getImage(
-        source: ImageSource.camera,
-        maxHeight: 650,
-        maxWidth: 650);
+    var _imageGallery = await ImagePicker()
+        .getImage(source: ImageSource.camera, maxHeight: 1920, maxWidth: 1080);
     if (_imageGallery != null) {
       setState(() {
         imageFile = File(_imageGallery.path);

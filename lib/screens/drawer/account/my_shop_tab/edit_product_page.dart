@@ -225,7 +225,7 @@ class _EditProductPage extends State {
     print('Select Gallery');
     // ignore: deprecated_member_use
     var _imageGallery = await ImagePicker()
-        .getImage(source: ImageSource.gallery, maxHeight: 650, maxWidth: 650);
+        .getImage(source: ImageSource.gallery, maxHeight: 1920, maxWidth: 1080);
     if (_imageGallery != null) {
       setState(() {
         imageFile = File(_imageGallery.path);
@@ -242,7 +242,7 @@ class _EditProductPage extends State {
     print('Select Camera');
     // ignore: deprecated_member_use
     var _imageGallery = await ImagePicker()
-        .getImage(source: ImageSource.camera, maxHeight: 650, maxWidth: 650);
+        .getImage(source: ImageSource.camera, maxHeight: 1920, maxWidth: 1080);
     if (_imageGallery != null) {
       setState(() {
         imageFile = File(_imageGallery.path);
