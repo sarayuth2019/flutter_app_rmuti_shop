@@ -42,142 +42,151 @@ class _StatusOrderTab extends State {
                   fontWeight: FontWeight.bold),
             ));
           } else {
-            return ListView.builder(
-                itemCount: snapshot.data.length,
-                itemBuilder: (BuildContext context, index) {
-                  return Card(
-                      child: Row(
-                    children: [
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                              left: 8,
-                              top: 8,
-                            ),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(30),
-                              child: Image.memory(
-                                base64Decode(snapshot.data[index].image),
-                                height: 100,
-                                width: 100,
-                                fit: BoxFit.fill,
-                              ),
-                            ),
-                          ),
-                          Text("PID : ${snapshot.data[index].item_id}")
-                        ],
-                      ),
-                      Expanded(
-                        child: Column(
+            return RefreshIndicator(
+              onRefresh: _onRefresh,
+              child: ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (BuildContext context, index) {
+                    return Card(
+                        child: Row(
+                      children: [
+                        Column(
                           children: [
-                            ListTile(
-                              title: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Order ID : ${snapshot.data[index].id}",
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  Text(
-                                    "${snapshot.data[index].name}",
-                                    style: TextStyle(fontSize: 20),
-                                  ),
-                                  Text(
-                                    "Seller ID : ${snapshot.data[index].seller_id}",
-                                    style: TextStyle(fontSize: 15),
-                                  ),
-                                ],
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                left: 8,
+                                top: 8,
                               ),
-                              subtitle: Text("${snapshot.data[index].date}"),
-                              trailing: Column(
-                                children: [
-                                  Text("จำนวน ${snapshot.data[index].number}"),
-                                  Text(
-                                      "ราคา ฿${snapshot.data[index].number * snapshot.data[index].price} "),
-                                ],
-                              ),
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text("สถานะสินค้า : "),
-                                    Container(
-                                        child: snapshot.data[index].status == 0
-                                            ? Expanded(
-                                          child: Text(
-                                              "รอดำเนินการ",
-                                              style: TextStyle(
-                                                  color: Colors.yellow[700],
-                                                  fontWeight:
-                                                  FontWeight.bold)),
-                                        )
-                                            : Container()),
-                                    Container(
-                                        child: snapshot.data[index].status == 1
-                                            ? Expanded(
-                                                child: Text(
-                                                    "จัดเตรียมสำเร็จ โปรดรับไปสินค้า",
-                                                    style: TextStyle(
-                                                        color: Colors.blue,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                              )
-                                            : Container()),
-                                    Container(
-                                        child: snapshot.data[index].status == 2
-                                            ? Text("รับสินค้าเรียบร้อยแล้ว",
-                                                style: TextStyle(
-                                                    color: Colors.green[700],
-                                                    fontWeight:
-                                                        FontWeight.bold))
-                                            : Container()),
-                                  ],
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(30),
+                                child: Image.memory(
+                                  base64Decode(snapshot.data[index].image),
+                                  height: 100,
+                                  width: 100,
+                                  fit: BoxFit.fill,
                                 ),
-                                Container(
-                                  child: snapshot.data[index].status == 2
-                                      ? Center(
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(primary: Colors.yellow[700]),
-                                            child: Text("ให้คะแนนรีวิว",
-                                                style: TextStyle(
-                                                    fontWeight:
-                                                        FontWeight.bold)),
-                                            onPressed: () {
-                                              Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          ReviewProductPage(
-                                                              accountID,
-                                                              snapshot
-                                                                  .data[index]
-                                                                  .item_id,
-                                                              snapshot
-                                                                  .data[index]
-                                                                  .id)));
-                                            },
-                                          ),
-                                        )
-                                      : Container(),
-                                )
-                                //RaisedButton(onPressed: () {print(snapshot.data[index].status);})
-                              ],
+                              ),
                             ),
+                            Text("PID : ${snapshot.data[index].item_id}")
                           ],
                         ),
-                      ),
-                    ],
-                  ));
-                });
+                        Expanded(
+                          child: Column(
+                            children: [
+                              ListTile(
+                                title: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "Order ID : ${snapshot.data[index].id}",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      "${snapshot.data[index].name}",
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    Text(
+                                      "Seller ID : ${snapshot.data[index].seller_id}",
+                                      style: TextStyle(fontSize: 15),
+                                    ),
+                                  ],
+                                ),
+                                subtitle: Text("${snapshot.data[index].date}"),
+                                trailing: Column(
+                                  children: [
+                                    Text("จำนวน ${snapshot.data[index].number}"),
+                                    Text(
+                                        "ราคา ฿${snapshot.data[index].number * snapshot.data[index].price} "),
+                                  ],
+                                ),
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text("สถานะสินค้า : "),
+                                      Container(
+                                          child: snapshot.data[index].status == 0
+                                              ? Expanded(
+                                            child: Text(
+                                                "รอดำเนินการ",
+                                                style: TextStyle(
+                                                    color: Colors.yellow[700],
+                                                    fontWeight:
+                                                    FontWeight.bold)),
+                                          )
+                                              : Container()),
+                                      Container(
+                                          child: snapshot.data[index].status == 1
+                                              ? Expanded(
+                                                  child: Text(
+                                                      "จัดเตรียมสำเร็จ โปรดรับไปสินค้า",
+                                                      style: TextStyle(
+                                                          color: Colors.blue,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                )
+                                              : Container()),
+                                      Container(
+                                          child: snapshot.data[index].status == 2
+                                              ? Text("รับสินค้าเรียบร้อยแล้ว",
+                                                  style: TextStyle(
+                                                      color: Colors.green[700],
+                                                      fontWeight:
+                                                          FontWeight.bold))
+                                              : Container()),
+                                    ],
+                                  ),
+                                  Container(
+                                    child: snapshot.data[index].status == 2
+                                        ? Center(
+                                            child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(primary: Colors.yellow[700]),
+                                              child: Text("ให้คะแนนรีวิว",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              onPressed: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            ReviewProductPage(
+                                                                accountID,
+                                                                snapshot
+                                                                    .data[index]
+                                                                    .item_id,
+                                                                snapshot
+                                                                    .data[index]
+                                                                    .id)));
+                                              },
+                                            ),
+                                          )
+                                        : Container(),
+                                  )
+                                  //RaisedButton(onPressed: () {print(snapshot.data[index].status);})
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ));
+                  }),
+            );
           }
         },
       ),
     );
+  }
+
+  Future<void> _onRefresh() async {
+    listOrderByCustomer();
+    setState(() {});
+    await Future.delayed(Duration(seconds: 3));
   }
 
   Future<List<_Order>> listOrderByCustomer() async {

@@ -21,10 +21,8 @@ class _NotifyPage extends State {
   _NotifyPage(this.accountID);
 
   final int accountID;
-  final urlListNotifyByUser =
-      "${Config.API_URL}/Backup/list/user";
-  final urlDeleteNotify =
-      "${Config.API_URL}/Notify/delete/user";
+  final urlListNotifyByUser = "${Config.API_URL}/Backup/list/user";
+  final urlDeleteNotify = "${Config.API_URL}/Notify/delete/user";
 
   @override
   void initState() {
@@ -71,9 +69,11 @@ class _NotifyPage extends State {
                               Text(
                                 "${snapshot.data[index].name}",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
                               ),
-                              Text("ราคา : ${snapshot.data[index].price} บาท"),
+                              Text(
+                                  "ราคา : ${snapshot.data[index].price} บาท"),
                               Text(
                                   "จำนวน : ${snapshot.data[index].number} ชิ้น"),
                               Column(
@@ -90,7 +90,8 @@ class _NotifyPage extends State {
                                                           FontWeight.bold),
                                                 ),
                                                 Text(
-                                                  snapshot.data[index].status,
+                                                  snapshot
+                                                      .data[index].status,
                                                   style: TextStyle(
                                                       color: Colors.blue,
                                                       fontWeight:
@@ -101,24 +102,25 @@ class _NotifyPage extends State {
                                           : Container()),
                                   Container(
                                       child: snapshot.data[index].status ==
-                                          "ส่งมอบสินค้า สำเร็จ"
+                                              "ส่งมอบสินค้า สำเร็จ"
                                           ? Row(
-                                        children: [
-                                          Text(
-                                            "สถานะสินค้า : ",
-                                            style: TextStyle(
-                                                fontWeight:
-                                                FontWeight.bold),
-                                          ),
-                                          Text(
-                                            snapshot.data[index].status,
-                                            style: TextStyle(
-                                                color: Colors.green,
-                                                fontWeight:
-                                                FontWeight.bold),
-                                          ),
-                                        ],
-                                      )
+                                              children: [
+                                                Text(
+                                                  "สถานะสินค้า : ",
+                                                  style: TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                                Text(
+                                                  snapshot
+                                                      .data[index].status,
+                                                  style: TextStyle(
+                                                      color: Colors.green,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
+                                              ],
+                                            )
                                           : Container()),
                                   Container(
                                       child: snapshot.data[index].status ==
@@ -132,7 +134,8 @@ class _NotifyPage extends State {
                                                           FontWeight.bold),
                                                 ),
                                                 Text(
-                                                  snapshot.data[index].status,
+                                                  snapshot
+                                                      .data[index].status,
                                                   style: TextStyle(
                                                       color: Colors.red,
                                                       fontWeight:
@@ -183,11 +186,12 @@ class _NotifyPage extends State {
     print("notify length : ${listNotifyByUser.length}");
     return listNotifyByUser;
   }
+
   void deleteNotify() async {
     Map params = Map();
     params['user'] = accountID.toString();
     print("delete notify...");
-    http.post(urlDeleteNotify,body: params).then((res) {
+    http.post(urlDeleteNotify, body: params).then((res) {
       print(res.body);
       print("delete notify success !");
     });
