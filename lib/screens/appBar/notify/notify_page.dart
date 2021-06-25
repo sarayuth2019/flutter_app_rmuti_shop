@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_rmuti_shop/Config/config.dart';
-import 'package:flutter_app_rmuti_shop/screens/appBar/cart/cart_page.dart';
-import 'package:flutter_app_rmuti_shop/screens/drawer/account/account_page.dart';
+import 'package:flutter_app_rmuti_shop/screens/drawer/account/account_main.dart';
 import 'package:http/http.dart' as http;
 
 class NotifyPage extends StatefulWidget {
@@ -56,14 +54,7 @@ class _NotifyPage extends State {
                   return GestureDetector(
                     onTap: () {
                       if (snapshot.data[index].status ==
-                          "จัดเตรียมสินค้า สำเร็จ") {
-                        Navigator.push(
-                            context,
-                            (MaterialPageRoute(
-                                builder: (context) => CartPage(accountID, 1))));
-                      }
-                      if (snapshot.data[index].status ==
-                          "มีคนสั่งรายการสินค้าของท่าน") {
+                          "ส่งมอบสินค้า สำเร็จ") {
                         Navigator.push(
                             context,
                             (MaterialPageRoute(
@@ -101,7 +92,7 @@ class _NotifyPage extends State {
                                                 Text(
                                                   snapshot.data[index].status,
                                                   style: TextStyle(
-                                                      color: Colors.green,
+                                                      color: Colors.blue,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
@@ -110,25 +101,24 @@ class _NotifyPage extends State {
                                           : Container()),
                                   Container(
                                       child: snapshot.data[index].status ==
-                                              "มีคนสั่งรายการสินค้าของท่าน"
+                                          "ส่งมอบสินค้า สำเร็จ"
                                           ? Row(
-                                              children: [
-                                                Text(
-                                                  "สถานะสินค้า : ",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                                Text(
-                                                  snapshot.data[index].status,
-                                                  style: TextStyle(
-                                                      color: Colors
-                                                          .yellowAccent[700],
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ],
-                                            )
+                                        children: [
+                                          Text(
+                                            "สถานะสินค้า : ",
+                                            style: TextStyle(
+                                                fontWeight:
+                                                FontWeight.bold),
+                                          ),
+                                          Text(
+                                            snapshot.data[index].status,
+                                            style: TextStyle(
+                                                color: Colors.green,
+                                                fontWeight:
+                                                FontWeight.bold),
+                                          ),
+                                        ],
+                                      )
                                           : Container()),
                                   Container(
                                       child: snapshot.data[index].status ==

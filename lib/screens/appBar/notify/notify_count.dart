@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app_rmuti_shop/Config/config.dart';
-import 'package:http/http.dart'as http;
-
+import 'package:http/http.dart' as http;
 
 class NotifyCount extends StatefulWidget {
   NotifyCount(this.accountID);
+
   final int accountID;
 
   @override
@@ -19,9 +19,9 @@ class NotifyCount extends StatefulWidget {
 
 class _NotifyCount extends State {
   _NotifyCount(this.accountID);
+
   final int accountID;
-  final urlNotifyByUser =
-      "${Config.API_URL}/Notify/list/user";
+  final urlNotifyByUser = "${Config.API_URL}/Notify/list/user";
   int _notifyCount = 0;
 
   @override
@@ -58,20 +58,20 @@ class _NotifyCount extends State {
     );
   }
 
-  Stream <void> streamNotifyCount()async* {
+  Stream<void> streamNotifyCount() async* {
     Map params = Map();
     params['user'] = accountID.toString();
     var res = await http.post(urlNotifyByUser, body: params);
     Map jsonData = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
     var notifyData = jsonData['data'];
     if (notifyData != null) {
-      setState(() {
-        _notifyCount = notifyData.length;
-      });
+      if (mounted)
+        setState(() {
+          _notifyCount = notifyData.length;
+        });
     } else {
-      print("Count Cart fall !");
+      print("Notify Count null !");
     }
     yield _notifyCount;
   }
-
 }

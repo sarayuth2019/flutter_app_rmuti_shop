@@ -94,7 +94,8 @@ class _ReviewProductPage extends State {
   }
 
   void saveReviewToDB() async {
-    snackBarKey.currentState.showSnackBar(snackBarOnReview);
+    //snackBarKey.currentState.showSnackBar(snackBarOnReview);
+    ScaffoldMessenger.of(context).showSnackBar(snackBarOnReview);
     print("accountID : ${accountID.toString()}");
     print("item ID : ${item_id.toString()}");
     print("rating: ${_rating.toString()}");
@@ -111,9 +112,11 @@ class _ReviewProductPage extends State {
       var statusData = jsonDataRes['status'];
       if (statusData == 1) {
         http.get("${urlDeleteOrder}${order_id}");
-        snackBarKey.currentState.showSnackBar(snackBarOnReviewSuccess);
+        // snackBarKey.currentState.showSnackBar(snackBarOnReviewSuccess);
+        ScaffoldMessenger.of(context).showSnackBar(snackBarOnReviewSuccess);
       } else {
-        snackBarKey.currentState.showSnackBar(snackBarOnReviewFall);
+        //snackBarKey.currentState.showSnackBar(snackBarOnReviewFall);
+        ScaffoldMessenger.of(context).showSnackBar(snackBarOnReviewFall);
       }
     });
   }

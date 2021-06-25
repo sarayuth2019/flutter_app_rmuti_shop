@@ -1,12 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_app_rmuti_shop/Config/config.dart';
-import 'package:http/http.dart'as http;
+import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'sing_in_page.dart';
-
-
 
 class SingUp extends StatefulWidget {
   @override
@@ -17,7 +17,7 @@ class SingUp extends StatefulWidget {
 }
 
 class _SingUp extends State {
-  final urlSingUp = "${Config.API_URL}/Register/register";
+  final urlSingUp = "${Config.API_URL}/Register/user";
   final _formKey = GlobalKey<FormState>();
   final _snackBarKey = GlobalKey<ScaffoldState>();
   final singUpSnackBar =
@@ -30,6 +30,8 @@ class _SingUp extends State {
   String name;
   String surname;
   String number;
+  File imageFile;
+  String imageData;
 
   @override
   Widget build(BuildContext context) {
@@ -45,66 +47,102 @@ class _SingUp extends State {
           // ignore: deprecated_member_use
           autovalidate: _checkText,
           key: _formKey,
-          child: Column(
-            children: [
-              TextFormField(
-                decoration: InputDecoration(hintText: "Email"),
-                maxLength: 32,
-                validator: validateEmail,
-                onSaved: (String _text) {
-                  email = _text;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(hintText: "Password"),
-                maxLength: 12,
-                obscureText: true,
-                validator: validatePassword,
-                controller: confirmPass,
-                onSaved: (String _text) {
-                  password = _text;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(hintText: "Confirm Password"),
-                maxLength: 12,
-                obscureText: true,
-                validator: validateConfirmPassword,
-              ),
-              TextFormField(
-                decoration: InputDecoration(hintText: "Name"),
-                maxLength: 32,
-                validator: validateName,
-                onSaved: (String _text) {
-                  name = _text;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(hintText: "Surname"),
-                maxLength: 32,
-                validator: validateName,
-                onSaved: (String _text) {
-                  surname = _text;
-                },
-              ),
-              TextFormField(
-                keyboardType: TextInputType.number,
-                maxLength: 10,
-                decoration: InputDecoration(hintText: "เบอร์โทรติดต่อ"),
-                validator: validateNumber,
-                onSaved: (String _num) {
-                  number = _num;
-                },
-              ),
-              RaisedButton(
-                color: Colors.orange[600],
-                onPressed: onSingUp,
-                child: Text(
-                  "Sing up",
-                  style: TextStyle(color: Colors.white),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: (){
+                      _showAlertSelectImage(context);
+                    },
+                    child: Container(
+                      child: imageData == null
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Container(
+                                height: 200,
+                                width: 200,
+                                color: Colors.grey,
+                                child: Icon(
+                                  Icons.person,size: 50,
+                                  color: Colors.white,
+                                ),
+                              ))
+                          : ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Container(
+                                child: Image.memory(
+                                  base64Decode(imageData),
+                                  fit: BoxFit.fill,
+                                  height: 200,
+                                  width: 200,
+                                ),
+                              ),
+                            ),
+                    ),
+                  ),
                 ),
-              )
-            ],
+                TextFormField(
+                  decoration: InputDecoration(hintText: "Email"),
+                  maxLength: 32,
+                  validator: validateEmail,
+                  onSaved: (String _text) {
+                    email = _text;
+                  },
+                ),
+                TextFormField(
+                  decoration: InputDecoration(hintText: "Password"),
+                  maxLength: 12,
+                  obscureText: true,
+                  validator: validatePassword,
+                  controller: confirmPass,
+                  onSaved: (String _text) {
+                    password = _text;
+                  },
+                ),
+                TextFormField(
+                  decoration: InputDecoration(hintText: "Confirm Password"),
+                  maxLength: 12,
+                  obscureText: true,
+                  validator: validateConfirmPassword,
+                ),
+                TextFormField(
+                  decoration: InputDecoration(hintText: "Name"),
+                  maxLength: 32,
+                  validator: validateName,
+                  onSaved: (String _text) {
+                    name = _text;
+                  },
+                ),
+                TextFormField(
+                  decoration: InputDecoration(hintText: "Surname"),
+                  maxLength: 32,
+                  validator: validateName,
+                  onSaved: (String _text) {
+                    surname = _text;
+                  },
+                ),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  maxLength: 10,
+                  decoration: InputDecoration(hintText: "เบอร์โทรติดต่อ"),
+                  validator: validateNumber,
+                  onSaved: (String _num) {
+                    number = _num;
+                  },
+                ),
+                RaisedButton(
+                  color: Colors.orange[600],
+                  onPressed: onSingUp,
+                  child: Text(
+                    "Sing up",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -171,16 +209,77 @@ class _SingUp extends State {
     }
   }
 
+  void _showAlertSelectImage(BuildContext context) async {
+    print('Show Alert Dialog Image !');
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Select Choice'),
+            content: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      child: GestureDetector(
+                          child: Text('Gallery'), onTap: _onGallery)),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                      child: GestureDetector(
+                          child: Text('Camera'), onTap: _onCamera)),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
+  _onGallery() async {
+    print('Select Gallery');
+    // ignore: deprecated_member_use
+    var _imageGallery = await ImagePicker()
+        .getImage(source: ImageSource.gallery, maxHeight: 1920, maxWidth: 1080);
+    if (_imageGallery != null) {
+      setState(() {
+        imageFile = File(_imageGallery.path);
+      });
+      imageData = base64Encode(imageFile.readAsBytesSync());
+      Navigator.of(context).pop();
+      return imageData;
+    } else {
+      return null;
+    }
+  }
+
+  _onCamera() async {
+    print('Select Camera');
+    // ignore: deprecated_member_use
+    var _imageGallery = await ImagePicker()
+        .getImage(source: ImageSource.camera, maxHeight: 1920, maxWidth: 1080);
+    if (_imageGallery != null) {
+      setState(() {
+        imageFile = File(_imageGallery.path);
+      });
+      imageData = base64Encode(imageFile.readAsBytesSync());
+      Navigator.of(context).pop();
+      return imageData;
+    } else {
+      return null;
+    }
+  }
+
   void onSingUp() {
     if (_formKey.currentState.validate()) {
-      _snackBarKey.currentState.showSnackBar(singUpSnackBar);
+      ScaffoldMessenger.of(context).showSnackBar(singUpSnackBar);
+      //_snackBarKey.currentState.showSnackBar(singUpSnackBar);
       _formKey.currentState.save();
       print(email);
       print(password);
       print(name);
       print(number);
       saveToDB();
-
     } else {
       setState(() {
         _checkText = true;
@@ -188,24 +287,28 @@ class _SingUp extends State {
     }
   }
 
-  void saveToDB()async{
+  void saveToDB() async {
     Map params = Map();
-    params['email'] = email;
-    params['password'] = password;
-    params['name'] = name;
-    params['surname'] = surname;
-    params['phone_number'] = number;
-    http.post(urlSingUp,body: params).then((res){
+    params['image'] = imageData.toString();
+    params['email'] = email.toString();
+    params['password'] = password.toString();
+    params['name'] = name.toString();
+    params['surname'] = surname.toString();
+    params['phone_number'] = number.toString();
+
+    http.post(urlSingUp, body: params).then((res) {
       print(res.body);
       Map resBody = jsonDecode(res.body) as Map;
       var _resStatus = resBody['status'];
       print("Sing Up Status : ${_resStatus}");
 
       setState(() {
-        if(_resStatus == 1){
-          Navigator.pop(context, MaterialPageRoute(builder: (context)=>SingIn()));
-        }else if(_resStatus == 0){
-          _snackBarKey.currentState.showSnackBar(singUpFail);
+        if (_resStatus == 1) {
+          Navigator.pop(
+              context, MaterialPageRoute(builder: (context) => SingIn()));
+        } else if (_resStatus == 0) {
+          ScaffoldMessenger.of(context).showSnackBar(singUpFail);
+          //_snackBarKey.currentState.showSnackBar(singUpFail);
         }
       });
     });

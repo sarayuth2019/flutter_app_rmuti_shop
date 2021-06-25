@@ -20,9 +20,15 @@ class _CartCount extends State {
   _CartCount(this.accountID);
 
   final int accountID;
-  final urlCartByCustomer =
-      "${Config.API_URL}/Cart/find/customer";
+  final urlCartByCustomer = "${Config.API_URL}/Cart/find/customer";
   int _countCart = 0;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    streamCartCount();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +36,7 @@ class _CartCount extends State {
     return StreamBuilder(
       stream: streamCartCount(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        //print("cart count snapshot data : ${snapshot.data}");
         if (snapshot.data == null) {
           return Container(
             height: 17,
@@ -65,11 +72,12 @@ class _CartCount extends State {
     Map jsonData = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
     var productsData = jsonData['data'];
     if (productsData != null) {
-      setState(() {
-        _countCart = productsData.length;
-      });
+      if (mounted)
+        setState(() {
+          _countCart = productsData.length;
+        });
     } else {
-      print("Count Cart fall !");
+      print("Count Cart null !");
     }
     yield _countCart;
   }

@@ -41,7 +41,7 @@ class _SingIn extends State {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.all(60.0),
+              padding: const EdgeInsets.all(30.0),
               child: CircleAvatar(
                 radius: 60,
                 backgroundColor: Colors.orange[600],
@@ -63,6 +63,16 @@ class _SingIn extends State {
                     ),
                   ],
                 ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 30),
+              child: Text(
+                "RMUTI Shop",
+                style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
             ),
             Card(

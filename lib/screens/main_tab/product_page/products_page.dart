@@ -125,7 +125,7 @@ class _ProductsPage extends State {
         children: [
           Container(
             color: Colors.white,
-            height: 300,
+            height: 350,
             child: image == null
                 ? Center(
                     child: ClipRRect(
@@ -455,7 +455,8 @@ class _ProductsPage extends State {
   }
 
   void _addToCart() async {
-    snackBarKey.currentState.showSnackBar(snackBarOnAddItem);
+    ScaffoldMessenger.of(context).showSnackBar(snackBarOnAddItem);
+    //snackBarKey.currentState.showSnackBar(snackBarOnAddItem);
     Map params = Map();
     params["name"] = name.toString();
     params["number"] = number.toString();
@@ -478,9 +479,11 @@ class _ProductsPage extends State {
       print(jsonRes);
       var resStatus = jsonRes['status'];
       if (resStatus == 1) {
-        snackBarKey.currentState.showSnackBar(snackBarOnAddItemSuccess);
+        ScaffoldMessenger.of(context).showSnackBar(snackBarOnAddItemSuccess);
+        //snackBarKey.currentState.showSnackBar(snackBarOnAddItemSuccess);
       } else {
-        snackBarKey.currentState.showSnackBar(snackBarOnAddItemFall);
+        ScaffoldMessenger.of(context).showSnackBar(snackBarOnAddItemFall);
+        //snackBarKey.currentState.showSnackBar(snackBarOnAddItemFall);
       }
     });
   }

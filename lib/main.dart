@@ -5,7 +5,7 @@ import 'package:flutter_app_rmuti_shop/screens/appBar/notify/notify_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/appBar/cart/cart_page.dart';
 import 'screens/appBar/search/search_page.dart';
-import 'screens/drawer/account/account_page.dart';
+import 'screens/drawer/account/account_main.dart';
 import 'screens/drawer/account/sing_in_up/sing_in_page.dart';
 import 'screens/drawer/location/location_page.dart';
 import 'screens/drawer/productsGroup/products_group_page.dart';
@@ -17,8 +17,6 @@ void main() =>
     runApp(MaterialApp(debugShowCheckedModeBanner: false, home: HomePage()));
 
 class HomePage extends StatefulWidget {
-  HomePage();
-
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -27,8 +25,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State {
-  _HomePage();
-
   int accountID;
 
   @override
@@ -76,7 +72,7 @@ class _HomePage extends State {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          CartPage(accountID, 0)));
+                                          CartPage(accountID)));
                         }),
                     Positioned(
                         top: 0,
@@ -220,7 +216,7 @@ class _HomePage extends State {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            CartPage(accountID, 0)));
+                                            CartPage(accountID)));
                           },
                           child: Card(
                             color: Colors.orange[600],
