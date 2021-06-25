@@ -31,6 +31,7 @@ class _AccountDataPage extends State {
     print("Market ID : ${accountID.toString()}");
     // TODO: implement build
     return Scaffold(
+        backgroundColor: Colors.blueGrey,
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.orange[600],
           child: Icon(Icons.edit),
@@ -59,14 +60,14 @@ class _AccountDataPage extends State {
                           child: snapshot.data.image == 'null'
                               ? Icon(
                                   Icons.person,
-                                  size: 50,
-                                  color: Colors.white,
+                                  size: 60,
+                                  color: Colors.blueGrey,
                                 )
                               : Image.memory(
                                   base64Decode(snapshot.data.image),
                                   fit: BoxFit.fill,
                                 ),
-                          color: Colors.blueGrey,
+                          color: Colors.white,
                           height: 220,
                           width: 220,
                         ),

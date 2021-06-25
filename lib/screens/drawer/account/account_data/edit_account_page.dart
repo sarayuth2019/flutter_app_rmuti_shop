@@ -49,7 +49,7 @@ class _EditAccount extends State {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(
+    return Scaffold(backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         title: Text("Edit Market ID : ${accountData.id}"),
         backgroundColor: Colors.orange[600],
@@ -72,13 +72,13 @@ class _EditAccount extends State {
                             ? Icon(
                                 Icons.person,
                                 size: 50,
-                                color: Colors.white,
+                                color: Colors.blueGrey,
                               )
                             : Image.memory(
                                 base64Decode(image),
                                 fit: BoxFit.fill,
                               ),
-                        color: Colors.blueGrey,
+                        color: Colors.white,
                         height: 220,
                         width: 220,
                       ),
@@ -87,43 +87,45 @@ class _EditAccount extends State {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  TextField(
-                    maxLength: 32,
-                    decoration: InputDecoration(
-                        hintText: " ชื่อผู้ใช้ : ${accountData.name}"),
-                    onChanged: (text) {
-                      setState(() {
-                        name = text;
-                      });
-                    },
-                  ),
-                  TextField(
-                    maxLength: 32,
-                    decoration: InputDecoration(
-                        hintText: " นามสกุล : ${accountData.surname}"),
-                    onChanged: (text) {
-                      setState(() {
-                        surname = text;
-                      });
-                    },
-                  ),
-                  TextField(
-                    maxLength: 10,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                        hintText:
-                            " เบอร์โทรติดต่อ : ${accountData.phone_number}"),
-                    onChanged: (text) {
-                      setState(() {
-                        phone_number = text;
-                      });
-                    },
-                  ),
-                ],
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    TextField(
+                      maxLength: 32,
+                      decoration: InputDecoration(
+                          hintText: " ชื่อผู้ใช้ : ${accountData.name}"),
+                      onChanged: (text) {
+                        setState(() {
+                          name = text;
+                        });
+                      },
+                    ),
+                    TextField(
+                      maxLength: 32,
+                      decoration: InputDecoration(
+                          hintText: " นามสกุล : ${accountData.surname}"),
+                      onChanged: (text) {
+                        setState(() {
+                          surname = text;
+                        });
+                      },
+                    ),
+                    TextField(
+                      maxLength: 10,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                          hintText:
+                              " เบอร์โทรติดต่อ : ${accountData.phone_number}"),
+                      onChanged: (text) {
+                        setState(() {
+                          phone_number = text;
+                        });
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
             ElevatedButton(

@@ -1,11 +1,9 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_rmuti_shop/config/config.dart';
-import 'package:flutter_app_rmuti_shop/screens/drawer/account/account_page/account_data_page.dart';
+import 'package:flutter_app_rmuti_shop/screens/drawer/account/account_data/account_data_page.dart';
 import 'package:flutter_app_rmuti_shop/screens/drawer/account/history_page.dart';
 import 'package:flutter_app_rmuti_shop/screens/drawer/account/status_orders/status_order_tab.dart';
-import 'package:flutter_app_rmuti_shop/screens/drawer/account/status_products_page.dart';
 
 class AccountPage extends StatefulWidget {
   AccountPage(this.accountID);
