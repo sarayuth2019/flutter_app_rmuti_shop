@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_app_rmuti_shop/Config/config.dart';
+import 'package:flutter_app_rmuti_shop/config/config.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'sing_in_page.dart';
@@ -24,14 +24,14 @@ class _SingUp extends State {
       SnackBar(content: Text("กำลังสมัคสมาชิก กรุณารอซักครู่..."));
   final singUpFail = SnackBar(content: Text("Email นี้มีผู้ใช้แล้ว"));
   bool _checkText = false;
-  String email;
-  String password;
+  String? email;
+  String? password;
   TextEditingController confirmPass = TextEditingController();
-  String name;
-  String surname;
-  String number;
-  File imageFile;
-  String imageData;
+  String? name;
+  String? surname;
+  String? number;
+  File? imageFile;
+  String? imageData;
 
   @override
   Widget build(BuildContext context) {
@@ -74,7 +74,7 @@ class _SingUp extends State {
                               borderRadius: BorderRadius.circular(100),
                               child: Container(
                                 child: Image.memory(
-                                  base64Decode(imageData),
+                                  base64Decode(imageData!),
                                   fit: BoxFit.fill,
                                   height: 200,
                                   width: 200,
@@ -88,7 +88,7 @@ class _SingUp extends State {
                   decoration: InputDecoration(hintText: "Email"),
                   maxLength: 32,
                   validator: validateEmail,
-                  onSaved: (String _text) {
+                  onSaved: (String? _text) {
                     email = _text;
                   },
                 ),
@@ -98,7 +98,7 @@ class _SingUp extends State {
                   obscureText: true,
                   validator: validatePassword,
                   controller: confirmPass,
-                  onSaved: (String _text) {
+                  onSaved: (String? _text) {
                     password = _text;
                   },
                 ),
@@ -112,7 +112,7 @@ class _SingUp extends State {
                   decoration: InputDecoration(hintText: "Name"),
                   maxLength: 32,
                   validator: validateName,
-                  onSaved: (String _text) {
+                  onSaved: (String? _text) {
                     name = _text;
                   },
                 ),
@@ -120,7 +120,7 @@ class _SingUp extends State {
                   decoration: InputDecoration(hintText: "Surname"),
                   maxLength: 32,
                   validator: validateName,
-                  onSaved: (String _text) {
+                  onSaved: (String? _text) {
                     surname = _text;
                   },
                 ),
@@ -129,12 +129,12 @@ class _SingUp extends State {
                   maxLength: 10,
                   decoration: InputDecoration(hintText: "เบอร์โทรติดต่อ"),
                   validator: validateNumber,
-                  onSaved: (String _num) {
+                  onSaved: (String? _num) {
                     number = _num;
                   },
                 ),
-                RaisedButton(
-                  color: Colors.orange[600],
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(primary: Colors.orange[600]),
                   onPressed: onSingUp,
                   child: Text(
                     "Sing up",
@@ -149,11 +149,11 @@ class _SingUp extends State {
     );
   }
 
-  String validateEmail(String value) {
+  String? validateEmail(String? value) {
     String pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regExp = RegExp(pattern);
-    if (value.length == 0) {
+    if (value!.length == 0) {
       return "กรุณากรอกอีเมล";
     } else if (!regExp.hasMatch(value)) {
       return "รูปแบบอีเมลไม่ถูกต้อง";
@@ -161,8 +161,8 @@ class _SingUp extends State {
     return null;
   }
 
-  String validatePassword(String text) {
-    if (text.length == 0) {
+  String? validatePassword(String? text) {
+    if (text!.length == 0) {
       return "กรุณากรอก Password";
     } else if (text.length < 6) {
       return "กรุณากรอก Password 6-12";
@@ -173,8 +173,8 @@ class _SingUp extends State {
     }
   }
 
-  String validateConfirmPassword(String text) {
-    if (text.length == 0) {
+  String? validateConfirmPassword(String? text) {
+    if (text!.length == 0) {
       return "กรุณากรอก Confirm Password";
     } else if (text != confirmPass.text) {
       return "กรุณากรอก Password ให้ตรงกัน";
@@ -183,26 +183,26 @@ class _SingUp extends State {
     }
   }
 
-  String validateName(String text) {
-    if (text.length == 0) {
+  String? validateName(String? text) {
+    if (text!.length == 0) {
       return "กรุณากรอกชื่อ";
     } else {
       return null;
     }
   }
 
-  String validateSurName(String text) {
-    if (text.length == 0) {
+  String? validateSurName(String? text) {
+    if (text!.length == 0) {
       return "กรุณากรอกนามสกุล";
     } else {
       return null;
     }
   }
 
-  String validateNumber(String text) {
+  String? validateNumber(String? text) {
     String pattern = r'^[0-9]{10}$';
     RegExp regExp = RegExp(pattern);
-    if (!regExp.hasMatch(text)) {
+    if (!regExp.hasMatch(text!)) {
       return "กรุณากรอกเบอร์ติดต่อให้ถูกต้อง";
     } else {
       return null;
@@ -245,7 +245,7 @@ class _SingUp extends State {
       setState(() {
         imageFile = File(_imageGallery.path);
       });
-      imageData = base64Encode(imageFile.readAsBytesSync());
+      imageData = base64Encode(imageFile!.readAsBytesSync());
       Navigator.of(context).pop();
       return imageData;
     } else {
@@ -262,7 +262,7 @@ class _SingUp extends State {
       setState(() {
         imageFile = File(_imageGallery.path);
       });
-      imageData = base64Encode(imageFile.readAsBytesSync());
+      imageData = base64Encode(imageFile!.readAsBytesSync());
       Navigator.of(context).pop();
       return imageData;
     } else {
@@ -271,10 +271,10 @@ class _SingUp extends State {
   }
 
   void onSingUp() {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context).showSnackBar(singUpSnackBar);
       //_snackBarKey.currentState.showSnackBar(singUpSnackBar);
-      _formKey.currentState.save();
+      _formKey.currentState!.save();
       print(email);
       print(password);
       print(name);

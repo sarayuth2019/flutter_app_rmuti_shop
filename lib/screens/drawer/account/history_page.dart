@@ -23,7 +23,7 @@ class _HistoryPage extends State {
   final int accountID;
   final urlListHistoryByUser = "${Config.API_URL}/Backup/list/user";
   final statusProducts = 'ส่งมอบสินค้า สำเร็จ';
-  List listHistory = [];
+  List<_HistoryData> listHistory = [];
 
   @override
   Widget build(BuildContext context) {

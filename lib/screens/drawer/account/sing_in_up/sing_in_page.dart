@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_rmuti_shop/Config/config.dart';
+import 'package:flutter_app_rmuti_shop/config/config.dart';
 import 'package:flutter_app_rmuti_shop/main.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,7 +23,7 @@ class _SingIn extends State {
       SnackBar(content: Text("กรุณาตรวจสอบ Email หรือ Password"));
   final urlSingIn = "${Config.API_URL}/User/Login";
 
-  int accountID;
+  int? accountID;
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
 
@@ -96,8 +96,8 @@ class _SingIn extends State {
             )),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: RaisedButton(
-                color: Colors.orange[600],
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.orange[600]),
                 onPressed: onSingIn,
                 child: Text(
                   "Sing In",
@@ -111,8 +111,8 @@ class _SingIn extends State {
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: RaisedButton(
-                color: Colors.grey,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.grey),
                 onPressed: () {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => SingUp()));
@@ -130,7 +130,8 @@ class _SingIn extends State {
   }
 
   void onSingIn() {
-    snackBarKey.currentState.showSnackBar(snackBarOnSingIn);
+    //snackBarKey.currentState.showSnackBar(snackBarOnSingIn);
+    ScaffoldMessenger.of(context).showSnackBar(snackBarOnSingIn);
     Map params = Map();
     params['email'] = email.text;
     params['password'] = password.text;
@@ -148,7 +149,8 @@ class _SingIn extends State {
               MaterialPageRoute(builder: (context) => HomePage()),
               (route) => false);
         } else if (_resStatus == 0) {
-          snackBarKey.currentState.showSnackBar(snackBarSingInFail);
+          //snackBarKey.currentState.showSnackBar(snackBarSingInFail);
+          ScaffoldMessenger.of(context).showSnackBar(snackBarSingInFail);
         }
       });
     });
@@ -156,7 +158,7 @@ class _SingIn extends State {
 
   Future saveUserIDToDevice ()async{
     final SharedPreferences _accountID = await SharedPreferences.getInstance();
-    _accountID.setInt('accountID', accountID);
+    _accountID.setInt('accountID', accountID!);
     print("save accountID to device : aid ${_accountID.toString()}");
   }
 

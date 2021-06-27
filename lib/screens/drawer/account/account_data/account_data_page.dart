@@ -22,9 +22,9 @@ class AccountDataPage extends StatefulWidget {
 class _AccountDataPage extends State {
   _AccountDataPage(this.accountID);
 
-  final accountID;
+  final int?  accountID;
   final String urlSendAccountById = "${Config.API_URL}/User/list/id";
-  AccountData _accountData;
+  AccountData? _accountData;
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +146,7 @@ class _AccountDataPage extends State {
           _dataAccount['image']);
       print("market data : ${_accountData}");
     });
-    return _accountData;
+    return _accountData!;
   }
 }
 

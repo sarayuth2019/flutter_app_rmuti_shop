@@ -24,7 +24,7 @@ class _ProductsGroupPage extends State {
   final int itemGroup;
   final urlFindByGroup =
       "${Config.API_URL}/Item/find/group";
-  String textGroup;
+  String? textGroup;
 
   @override
   void initState() {
@@ -49,7 +49,7 @@ class _ProductsGroupPage extends State {
       backgroundColor: Colors.blueGrey,
       appBar: AppBar(
         backgroundColor: Colors.orange[600],
-        title: Text(textGroup),
+        title: Text(textGroup!),
       ),
       body: Container(
         child: FutureBuilder(

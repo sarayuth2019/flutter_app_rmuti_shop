@@ -19,7 +19,7 @@ class AllProductsPage extends StatefulWidget {
 class _AllProductsPage extends State {
   _AllProductsPage();
 
-  int accountID;
+  int? accountID;
   final urlListAllProducts = "${Config.API_URL}/Item/list";
 
   @override
@@ -51,7 +51,7 @@ class _AllProductsPage extends State {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => ProductsPage(
-                                        accountID,
+                                        accountID!,
                                         snapshot.data[index].id,
                                         snapshot.data[index].name,
                                         snapshot.data[index].description,

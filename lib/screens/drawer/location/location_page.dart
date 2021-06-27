@@ -16,7 +16,7 @@ class LocationPage extends StatefulWidget {
 class _LocationPage extends State {
 
   Completer<GoogleMapController> _controller = Completer();
-  LocationData _locationData;
+  LocationData? _locationData;
 
   @override
   void initState() {
@@ -77,7 +77,7 @@ class _LocationPage extends State {
     GoogleMapController controller = await _controller.future;
     _locationData = await getMyLocation();
     controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-        target: LatLng(_locationData.latitude, _locationData.longitude),
+        target: LatLng(_locationData!.latitude, _locationData!.longitude),
         zoom: 18)));
   }
 }

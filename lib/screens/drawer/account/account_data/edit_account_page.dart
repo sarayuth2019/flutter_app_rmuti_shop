@@ -28,12 +28,12 @@ class _EditAccount extends State {
   final snackBarEditSuccess = SnackBar(content: Text("แก้ไขสำเร็จ"));
   final snackBarEditFall = SnackBar(content: Text("แก้ไขผิดพลาด"));
 
-  String name;
-  String surname;
-  String email;
-  String phone_number;
-  String image;
-  File imageFile;
+  String? name;
+  String? surname;
+  String? email;
+  String? phone_number;
+  String? image;
+  File? imageFile;
 
   @override
   void initState() {
@@ -75,7 +75,7 @@ class _EditAccount extends State {
                                 color: Colors.blueGrey,
                               )
                             : Image.memory(
-                                base64Decode(image),
+                                base64Decode(image!),
                                 fit: BoxFit.fill,
                               ),
                         color: Colors.white,
@@ -177,7 +177,7 @@ class _EditAccount extends State {
       setState(() {
         imageFile = File(_imageGallery.path);
       });
-      image = base64Encode(imageFile.readAsBytesSync());
+      image = base64Encode(imageFile!.readAsBytesSync());
       Navigator.of(context).pop();
       return image;
     } else {
@@ -194,7 +194,7 @@ class _EditAccount extends State {
       setState(() {
         imageFile = File(_imageGallery.path);
       });
-      image = base64Encode(imageFile.readAsBytesSync());
+      image = base64Encode(imageFile!.readAsBytesSync());
       Navigator.of(context).pop();
       return image;
     } else {

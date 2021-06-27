@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_rmuti_shop/Config/config.dart';
-import 'package:flutter_app_rmuti_shop/screens/main_tab/product_page/show_review_page.dart';
+import 'package:flutter_app_rmuti_shop/config/config.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:http/http.dart' as http;
 import '../../drawer/account/sing_in_up/sing_in_page.dart';
+import 'show_review_page.dart';
 
 class ProductsPage extends StatefulWidget {
   ProductsPage(
@@ -94,13 +94,13 @@ class _ProductsPage extends State {
       SnackBar(content: Text("เพิ่มสินค้าไปยังรถเข็น ล้มเหลว !"));
 
   int number = 1;
-  int _price;
-  double _sumDiscount;
+  int? _price;
+  double? _sumDiscount;
 
   List _listReview = [];
-  int countRating;
-  double sumRating;
-  double meanRating;
+  int? countRating;
+  double? sumRating;
+  double? meanRating;
 
   @override
   void initState() {
@@ -221,13 +221,13 @@ class _ProductsPage extends State {
                                     MaterialPageRoute(
                                         builder: (context) => ShowReviewPage(
                                             _listReview,
-                                            meanRating,
-                                            countRating)));
+                                            meanRating!,
+                                            countRating!)));
                               },
                               child: Row(
                                 children: [
                                   Text(
-                                    "${meanRating.toStringAsFixed(1)}",
+                                    "${meanRating!.toStringAsFixed(1)}",
                                     style: TextStyle(
                                         color: Colors.blue, fontSize: 15),
                                   ),
@@ -278,7 +278,7 @@ class _ProductsPage extends State {
                                             width: 20,
                                           ),
                                           Text(
-                                            "฿${_price * number}",
+                                            "฿${_price! * number}",
                                             style: TextStyle(
                                                 fontSize: 30,
                                                 fontWeight: FontWeight.bold),
@@ -286,7 +286,7 @@ class _ProductsPage extends State {
                                         ],
                                       )
                                     : Text(
-                                        "฿${_price * number}",
+                                        "฿${_price! * number}",
                                         style: TextStyle(
                                             fontSize: 30,
                                             fontWeight: FontWeight.bold),
@@ -294,7 +294,7 @@ class _ProductsPage extends State {
                               )
                             : Container(
                                 child: Text(
-                                  "฿${_price * number}",
+                                  "฿${_price! * number}",
                                   style: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.bold),
@@ -361,7 +361,7 @@ class _ProductsPage extends State {
                               ),
                               onPressed: () {
                                 if (number >= count_promotion - 1) {
-                                  _price = (price - _sumDiscount).toInt();
+                                  _price = (price - _sumDiscount!).toInt();
                                   setState(() {
                                     number++;
                                     print(
@@ -449,7 +449,7 @@ class _ProductsPage extends State {
     print("Review length : ${countRating.toString()}");
     sumRating = _sumRating;
     print("sum rating : ${sumRating.toString()}");
-    meanRating = sumRating / countRating;
+    meanRating = sumRating! / countRating!;
     print("rating เฉลี่ย : ${meanRating.toString()}");
     return listReview;
   }
