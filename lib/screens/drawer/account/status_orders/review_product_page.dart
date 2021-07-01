@@ -106,12 +106,12 @@ class _ReviewProductPage extends State {
     params['items'] = item_id.toString();
     params['rating'] = _rating.toString();
     params['content'] = content.text;
-    await http.post(urlSaveReview, body: params).then((res) {
+    await http.post(Uri.parse(urlSaveReview), body: params).then((res) {
       print(res.body);
       var jsonDataRes = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
       var statusData = jsonDataRes['status'];
       if (statusData == 1) {
-        http.get("${urlDeleteOrder}${order_id}");
+        http.get(Uri.parse("${urlDeleteOrder}${order_id}"));
         // snackBarKey.currentState.showSnackBar(snackBarOnReviewSuccess);
         ScaffoldMessenger.of(context).showSnackBar(snackBarOnReviewSuccess);
       } else {

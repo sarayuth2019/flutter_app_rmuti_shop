@@ -135,7 +135,7 @@ class _SingIn extends State {
     Map params = Map();
     params['email'] = email.text;
     params['password'] = password.text;
-    http.post(urlSingIn, body: params).then((res) {
+    http.post(Uri.parse(urlSingIn), body: params).then((res) {
       Map resData = jsonDecode(res.body) as Map;
       var _resStatus = resData['status'];
       var _accountData = resData['data'];

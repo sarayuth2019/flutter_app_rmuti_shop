@@ -296,7 +296,7 @@ class _SingUp extends State {
     params['surname'] = surname.toString();
     params['phone_number'] = number.toString();
 
-    http.post(urlSingUp, body: params).then((res) {
+    http.post(Uri.parse(urlSingUp), body: params).then((res) {
       print(res.body);
       Map resBody = jsonDecode(res.body) as Map;
       var _resStatus = resBody['status'];

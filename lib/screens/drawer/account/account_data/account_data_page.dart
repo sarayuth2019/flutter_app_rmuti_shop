@@ -129,7 +129,7 @@ class _AccountDataPage extends State {
   Future<AccountData> sendDataMarketByUser() async {
     Map params = Map();
     params['id'] = accountID.toString();
-    await http.post(urlSendAccountById, body: params).then((res) {
+    await http.post(Uri.parse(urlSendAccountById), body: params).then((res) {
       print("Send Market Data...");
       Map _jsonRes = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
       var _dataAccount = _jsonRes['data'];

@@ -1,5 +1,3 @@
-// @dart=2.9
-
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app_rmuti_shop/screens/appBar/notify/notify_count.dart';
@@ -27,7 +25,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State {
-  int accountID;
+  int? accountID = 0;
 
   @override
   void initState() {
@@ -54,7 +52,8 @@ class _HomePage extends State {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SearchPage(accountID)));
+                                  builder: (context) =>
+                                      SearchPage(accountID!)));
                         }),
                   ],
                 ),
@@ -65,7 +64,7 @@ class _HomePage extends State {
                     IconButton(
                         icon: Icon(Icons.shopping_cart),
                         onPressed: () {
-                          accountID == null
+                          accountID == 0
                               ? Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -74,17 +73,17 @@ class _HomePage extends State {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          CartPage(accountID)));
+                                          CartPage(accountID!)));
                         }),
                     Positioned(
                         top: 0,
                         right: 0,
-                        child: accountID == null
+                        child: accountID == 0
                             ? Container(
                                 height: 17,
                                 width: 17,
                               )
-                            : Center(child: CartCount(accountID)))
+                            : Center(child: CartCount(accountID!)))
                   ],
                 ),
               ),
@@ -94,7 +93,7 @@ class _HomePage extends State {
                     IconButton(
                         icon: Icon(Icons.notifications_active),
                         onPressed: () {
-                          accountID == null
+                          accountID == 0
                               ? Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -103,17 +102,17 @@ class _HomePage extends State {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          NotifyPage(accountID)));
+                                          NotifyPage(accountID!)));
                         }),
                     Positioned(
                         top: 0,
                         right: 0,
-                        child: accountID == null
+                        child: accountID == 0
                             ? Container(
                                 height: 17,
                                 width: 17,
                               )
-                            : Center(child: NotifyCount(accountID)))
+                            : Center(child: NotifyCount(accountID!)))
                   ],
                 ),
               ),
@@ -144,7 +143,7 @@ class _HomePage extends State {
                       children: [
                         Padding(
                             padding: const EdgeInsets.all(12.0),
-                            child: accountID == null
+                            child: accountID == 0
                                 ? Text(
                                     "Hello",
                                     style: TextStyle(
@@ -161,7 +160,7 @@ class _HomePage extends State {
                                   )),
                         GestureDetector(
                           onTap: () {
-                            accountID == null
+                            accountID == 0
                                 ? Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -209,7 +208,7 @@ class _HomePage extends State {
                         ),
                         GestureDetector(
                           onTap: () {
-                            accountID == null
+                            accountID == 0
                                 ? Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -218,7 +217,7 @@ class _HomePage extends State {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            CartPage(accountID)));
+                                            CartPage(accountID!)));
                           },
                           child: Card(
                             color: Colors.orange[600],
@@ -257,7 +256,7 @@ class _HomePage extends State {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        ProductsGroupPage(accountID, 1)));
+                                        ProductsGroupPage(accountID!, 1)));
                           },
                           child: Card(
                             color: Colors.orange[600],
@@ -279,7 +278,7 @@ class _HomePage extends State {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        ProductsGroupPage(accountID, 2)));
+                                        ProductsGroupPage(accountID!, 2)));
                           },
                           child: Card(
                             color: Colors.orange[600],
@@ -301,7 +300,7 @@ class _HomePage extends State {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        ProductsGroupPage(accountID, 3)));
+                                        ProductsGroupPage(accountID!, 3)));
                           },
                           child: Card(
                             color: Colors.orange[600],
@@ -346,7 +345,7 @@ class _HomePage extends State {
             ),
           ),
           body: TabBarView(
-            children: [AllProductsPage(), AllDealsPage(accountID)],
+            children: [AllProductsPage(), AllDealsPage(accountID!)],
           )),
       initialIndex: 0,
       length: 2,
@@ -355,10 +354,10 @@ class _HomePage extends State {
 
   Future autoLogin() async {
     final SharedPreferences _accountID = await SharedPreferences.getInstance();
-    final accountIDInDevice = _accountID.getInt('accountID');
-    if (accountIDInDevice != null) {
+    final int? accountIDInDevice = _accountID.getInt('accountID');
+    if (accountIDInDevice != 0) {
       setState(() {
-        accountID = accountIDInDevice;
+        accountID = accountIDInDevice ?? 0;
         print("account login future: accountID ${accountID.toString()}");
       });
     }

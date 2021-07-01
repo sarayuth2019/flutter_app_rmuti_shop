@@ -78,7 +78,7 @@ class _ProductsPage extends State {
   final String location;
   final int seller_id;
   final String data;
-  final String image;
+  final String? image;
   final int discount;
   final int count_promotion;
   final int status_promotion;
@@ -143,7 +143,7 @@ class _ProductsPage extends State {
                     ),
                   )
                 : Image.memory(
-                    base64Decode(image),
+                    base64Decode(image!),
                     fit: BoxFit.fill,
                   ),
           ),
@@ -201,7 +201,7 @@ class _ProductsPage extends State {
                                       color: Colors.amber,
                                     );
                                   },
-                                  itemSize: 20,
+                                  itemSize: 20, onRatingUpdate: (double value) {  },
                                 ),
                                 SizedBox(
                                   width: 5,
@@ -238,14 +238,14 @@ class _ProductsPage extends State {
                                     ignoreGestures: true,
                                     allowHalfRating: true,
                                     itemCount: 5,
-                                    initialRating: meanRating,
+                                    initialRating: meanRating!,
                                     itemBuilder: (context, r) {
                                       return Icon(
                                         Icons.star_rounded,
                                         color: Colors.amber,
                                       );
                                     },
-                                    itemSize: 20,
+                                    itemSize: 20, onRatingUpdate: (double value) {  },
                                   ),
                                   SizedBox(
                                     width: 5,
@@ -382,7 +382,7 @@ class _ProductsPage extends State {
                       ),
                       GestureDetector(
                           onTap: () {
-                            if (accountID == null) {
+                            if (accountID == 0) {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -427,7 +427,7 @@ class _ProductsPage extends State {
 
     params['items'] = id.toString();
     print("connect to Api Review...");
-    await http.post(urlReviewByItems, body: params).then((res) {
+    await http.post(Uri.parse(urlReviewByItems), body: params).then((res) {
       print("connect to Api Review Success !");
       Map jsonData = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
       var dataReview = jsonData['data'];
@@ -474,7 +474,7 @@ class _ProductsPage extends State {
     print("seller : ${seller_id.toString()}");
     print("Connecting to API ");
 
-    http.post(urlSaveItemToCart, body: params).then((res) {
+    http.post(Uri.parse(urlSaveItemToCart), body: params).then((res) {
       var jsonRes = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
       print(jsonRes);
       var resStatus = jsonRes['status'];

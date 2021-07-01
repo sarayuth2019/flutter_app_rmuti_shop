@@ -23,11 +23,11 @@ environment:
 dependencies:
 
   shared_preferences:
-  image_picker: ^0.6.7+21
-  flutter_rating_bar: ^3.2.0+1
-  http: ^0.12.0+4
+  image_picker:
+  flutter_rating_bar:
+  http:
   google_maps_flutter:
-  location: 2.3.5
+  location:
 
   flutter:
     sdk: flutter

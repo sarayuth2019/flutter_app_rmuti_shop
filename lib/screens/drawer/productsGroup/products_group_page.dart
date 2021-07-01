@@ -184,7 +184,7 @@ class _ProductsGroupPage extends State {
     List<_Products> listGroupProducts = [];
     params['group'] = itemGroup.toString();
     print("connect to Api Group Products...");
-    await http.post(urlFindByGroup, body: params).then((res) {
+    await http.post(Uri.parse(urlFindByGroup), body: params).then((res) {
       print("connect to Api Group Products Success");
 
       Map jsonData = jsonDecode(utf8.decode(res.bodyBytes)) as Map;

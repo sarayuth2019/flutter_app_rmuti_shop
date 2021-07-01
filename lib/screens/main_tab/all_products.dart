@@ -19,7 +19,7 @@ class AllProductsPage extends StatefulWidget {
 class _AllProductsPage extends State {
   _AllProductsPage();
 
-  int? accountID;
+  int? accountID = 0;
   final urlListAllProducts = "${Config.API_URL}/Item/list";
 
   @override
@@ -87,18 +87,18 @@ class _AllProductsPage extends State {
                                               )),
                                         )
                                       : ClipRRect(
-                                  borderRadius:
-                                  BorderRadius.circular(30),
-                                  child: Container(
-                                    height: 150,
-                                    width: 150,
-                                    child: Image.memory(
-                                      base64Decode(
-                                          snapshot.data[index].image),
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          child: Container(
+                                            height: 150,
+                                            width: 150,
+                                            child: Image.memory(
+                                              base64Decode(
+                                                  snapshot.data[index].image),
+                                              fit: BoxFit.fill,
+                                            ),
+                                          ),
+                                        ),
                                 ),
                                 Flexible(
                                   child: Padding(
@@ -175,7 +175,7 @@ class _AllProductsPage extends State {
 
   Future<List<_Products>> _listProducts() async {
     print("connect to Api All Products...");
-    var _getDataProDucts = await http.get(urlListAllProducts);
+    var _getDataProDucts = await http.get(Uri.parse(urlListAllProducts));
     print("connect to Api All Products Success");
     var _jsonDataAllProducts =
         jsonDecode(utf8.decode(_getDataProDucts.bodyBytes));
@@ -203,14 +203,12 @@ class _AllProductsPage extends State {
 
   Future getAccountID() async {
     final SharedPreferences _accountID = await SharedPreferences.getInstance();
-    final accountIDInDevice = _accountID.getInt('accountID');
-    if (accountIDInDevice != null) {
+    final int? accountIDInDevice = _accountID.getInt('accountID');
+    if (accountIDInDevice != 0) {
       setState(() {
-        accountID = accountIDInDevice;
+        accountID = accountIDInDevice ?? 0;
         print("Get account login future: accountID ${accountID.toString()}");
       });
-    } else {
-      print("no have accountID login");
     }
   }
 }

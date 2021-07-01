@@ -171,7 +171,7 @@ class _AllDealsPage extends State {
     List<_Products> listAllDealsProducts = [];
     Map params = Map();
     params['promotion'] = statusPromotion.toString();
-    await http.post(urlListAllDealsProducts,body: params).then((res){
+    await http.post(Uri.parse(urlListAllDealsProducts),body: params).then((res){
       print("connect to Api All Deals Products Success !");
       Map jsonData = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
       var productsData = jsonData['data'];

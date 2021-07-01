@@ -61,7 +61,7 @@ class _NotifyCount extends State {
   Stream<void> streamNotifyCount() async* {
     Map params = Map();
     params['user'] = accountID.toString();
-    var res = await http.post(urlNotifyByUser, body: params);
+    var res = await http.post(Uri.parse(urlNotifyByUser), body: params);
     Map jsonData = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
     var notifyData = jsonData['data'];
     if (notifyData != null) {

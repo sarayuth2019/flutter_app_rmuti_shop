@@ -77,7 +77,7 @@ class _SearchPage extends State {
 
   Future<List<_Products>> _listProducts() async {
     print("connect to Api...");
-    var _getDataProDucts = await http.get(urlListAllProducts);
+    var _getDataProDucts = await http.get(Uri.parse(urlListAllProducts));
     print("connect to Api Success");
     var _jsonDataAllProducts =
         jsonDecode(utf8.decode(_getDataProDucts.bodyBytes));

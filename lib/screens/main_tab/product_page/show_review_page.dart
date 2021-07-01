@@ -56,7 +56,7 @@ class _ShowReviewPage extends State {
                         color: Colors.amber,
                       );
                     },
-                    itemSize: 25,
+                    itemSize: 25, onRatingUpdate: (double value) {  },
                   ),
                 ),
                 Text("(${countRating.toString()})ratings")
@@ -83,7 +83,7 @@ class _ShowReviewPage extends State {
                                 color: Colors.amber,
                               );
                             },
-                            itemSize: 20,
+                            itemSize: 20, onRatingUpdate: (double value) {  },
                           ),
                           Text(
                             "(${listReview[index].rating})",

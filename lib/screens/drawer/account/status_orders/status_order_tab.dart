@@ -194,7 +194,7 @@ class _StatusOrderTab extends State {
     List<_Order> listOrderByCustomer = [];
     params['customer'] = accountID.toString();
     print("connect to Api Order by Customer...");
-    await http.post(urlListOrderByCustomer, body: params).then((res) {
+    await http.post(Uri.parse(urlListOrderByCustomer), body: params).then((res) {
       print("connect to Api Order by Customer Success");
 
       Map jsonData = jsonDecode(utf8.decode(res.bodyBytes)) as Map;

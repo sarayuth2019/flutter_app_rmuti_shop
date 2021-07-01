@@ -28,7 +28,8 @@ class _HistoryPage extends State {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return Scaffold(backgroundColor: Colors.blueGrey,
+    return Scaffold(
+      backgroundColor: Colors.blueGrey,
       body: FutureBuilder(
         future: _listHistory(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -51,72 +52,71 @@ class _HistoryPage extends State {
                                   fontWeight: FontWeight.bold, fontSize: 20),
                             ),
                             Text("ราคา : ${snapshot.data[index].price} บาท"),
-                            Text(
-                                "จำนวน : ${snapshot.data[index].number} ชิ้น"),
+                            Text("จำนวน : ${snapshot.data[index].number} ชิ้น"),
                             Column(
                               children: [
                                 Container(
                                     child: snapshot.data[index].status ==
-                                        "จัดเตรียมสินค้า สำเร็จ"
+                                            "จัดเตรียมสินค้า สำเร็จ"
                                         ? Row(
-                                      children: [
-                                        Text(
-                                          "สถานะสินค้า : ",
-                                          style: TextStyle(
-                                              fontWeight:
-                                              FontWeight.bold),
-                                        ),
-                                        Text(
-                                          snapshot.data[index].status,
-                                          style: TextStyle(
-                                              color: Colors.blue,
-                                              fontWeight:
-                                              FontWeight.bold),
-                                        ),
-                                      ],
-                                    )
+                                            children: [
+                                              Text(
+                                                "สถานะสินค้า : ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                snapshot.data[index].status,
+                                                style: TextStyle(
+                                                    color: Colors.blue,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          )
                                         : Container()),
                                 Container(
                                     child: snapshot.data[index].status ==
-                                        "ส่งมอบสินค้า สำเร็จ"
+                                            "ส่งมอบสินค้า สำเร็จ"
                                         ? Row(
-                                      children: [
-                                        Text(
-                                          "สถานะสินค้า : ",
-                                          style: TextStyle(
-                                              fontWeight:
-                                              FontWeight.bold),
-                                        ),
-                                        Text(
-                                          snapshot.data[index].status,
-                                          style: TextStyle(
-                                              color: Colors.green,
-                                              fontWeight:
-                                              FontWeight.bold),
-                                        ),
-                                      ],
-                                    )
+                                            children: [
+                                              Text(
+                                                "สถานะสินค้า : ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                snapshot.data[index].status,
+                                                style: TextStyle(
+                                                    color: Colors.green,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          )
                                         : Container()),
                                 Container(
                                     child: snapshot.data[index].status ==
-                                        "สินค้าหมด"
+                                            "สินค้าหมด"
                                         ? Row(
-                                      children: [
-                                        Text(
-                                          "สถานะสินค้า : ",
-                                          style: TextStyle(
-                                              fontWeight:
-                                              FontWeight.bold),
-                                        ),
-                                        Text(
-                                          snapshot.data[index].status,
-                                          style: TextStyle(
-                                              color: Colors.red,
-                                              fontWeight:
-                                              FontWeight.bold),
-                                        ),
-                                      ],
-                                    )
+                                            children: [
+                                              Text(
+                                                "สถานะสินค้า : ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                              Text(
+                                                snapshot.data[index].status,
+                                                style: TextStyle(
+                                                    color: Colors.red,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
+                                          )
                                         : Container()),
                               ],
                             ),
@@ -138,21 +138,22 @@ class _HistoryPage extends State {
     List<_HistoryData> listHistoryByUser = [];
     params['user'] = accountID.toString();
     print("List History By user...");
-    await http.post(urlListHistoryByUser, body: params).then((res) {
+    await http.post(Uri.parse(urlListHistoryByUser), body: params).then((res) {
       print("List History By user success !");
       var _jsonDataNotify = jsonDecode(utf8.decode(res.bodyBytes));
       var _dataNotify = _jsonDataNotify['data'];
+      print(_dataNotify);
       for (var i in _dataNotify) {
         _HistoryData _notifyData = _HistoryData(
-            i['id'],
-            i['name'],
-            i['number'],
-            i['price'],
-            i['status'],
-            i['user'],
-            i['item'],
-            i['date'],
-            i['image']);
+          i['id'],
+          i['name'],
+          i['number'],
+          i['price'],
+          i['status'],
+          i['user'],
+          i['item'],
+          i['date'],
+        );
         listHistoryByUser.insert(0, _notifyData);
       }
     });
@@ -160,7 +161,7 @@ class _HistoryPage extends State {
 
     listHistory = listHistoryByUser
         .where((element) =>
-        element.status.toLowerCase().contains(statusProducts.toLowerCase()))
+            element.status.toLowerCase().contains(statusProducts.toLowerCase()))
         .toList();
     print("History Status Success length  : ${listHistory.length}");
     print("History  : ${listHistory.toList()}");
@@ -178,8 +179,7 @@ class _HistoryData {
   final int user;
   final int item_id;
   final String date;
-  final String image;
 
   _HistoryData(this.id, this.name, this.number, this.price, this.status,
-      this.user, this.item_id, this.date, this.image);
+      this.user, this.item_id, this.date);
 }

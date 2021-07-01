@@ -124,7 +124,7 @@ class _CartPage extends State {
                                             snackBarOnDelete);
                                         http
                                             .get(
-                                            "${urlDeleteProductInCart}${_listProductsCartByCustomer[index].id}")
+                                            Uri.parse("${urlDeleteProductInCart}${_listProductsCartByCustomer[index].id}"))
                                             .then((res) {
                                           var jsonData =
                                           jsonDecode(res.body);
@@ -215,7 +215,7 @@ class _CartPage extends State {
 
     params['customer'] = accountID.toString();
     print("connect to Api Cart Customer Products...");
-    await http.post(urlCartByCustomer, body: params).then((res) {
+    await http.post(Uri.parse(urlCartByCustomer), body: params).then((res) {
       print("connect to Api Cart Customer Products Success");
 
       Map jsonData = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
@@ -255,7 +255,7 @@ class _CartPage extends State {
       params['user'] = element.seller_id.toString();
       params['item'] = element.item_id.toString();
       params['image'] = element.image.toString();
-      http.post(urlSaveToOrder, body: params).then((res) {
+      http.post(Uri.parse(urlSaveToOrder), body: params).then((res) {
         print(res.body);
         Map jsonData = jsonDecode(res.body);
         var statusData = jsonData['status'];
@@ -270,16 +270,16 @@ class _CartPage extends State {
           _params['item'] = element.item_id.toString();
           _params['image'] = element.image.toString();
           print("save notify...");
-          http.post(urlSaveNotify, body: _params).then((res) {
+          http.post(Uri.parse(urlSaveNotify), body: _params).then((res) {
             print("save notify success !");
           });
-          http.post(urlSaveBackUpNotify, body: _params).then((res) {
+          http.post(Uri.parse(urlSaveBackUpNotify), body: _params).then((res) {
             print("save BackUp notify success !");
           });
           //snackBarKey.currentState.showSnackBar(snackBarSaveToOrderSuccess);
           ScaffoldMessenger.of(context)
               .showSnackBar(snackBarSaveToOrderSuccess);
-          http.get("${urlDeleteProductInCart}${element.id}").then((res) {
+          http.get(Uri.parse("${urlDeleteProductInCart}${element.id}")).then((res) {
             var jsonData = jsonDecode(res.body);
             var statusData = jsonData['status'];
             if (statusData == 0) {

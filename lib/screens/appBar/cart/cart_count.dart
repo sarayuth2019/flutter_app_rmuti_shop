@@ -68,7 +68,7 @@ class _CartCount extends State {
   Stream<void> streamCartCount() async* {
     Map params = Map();
     params['customer'] = accountID.toString();
-    var res = await http.post(urlCartByCustomer, body: params);
+    var res = await http.post(Uri.parse(urlCartByCustomer), body: params);
     Map jsonData = jsonDecode(utf8.decode(res.bodyBytes)) as Map;
     var productsData = jsonData['data'];
     if (productsData != null) {

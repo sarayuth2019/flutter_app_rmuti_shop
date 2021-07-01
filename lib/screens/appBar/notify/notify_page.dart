@@ -44,6 +44,7 @@ class _NotifyPage extends State {
         future: _listNotify(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.data == null) {
+            print(snapshot.data);
             return Center(child: CircularProgressIndicator());
           } else {
             return ListView.builder(
@@ -165,10 +166,11 @@ class _NotifyPage extends State {
     List<_NotifyData> listNotifyByUser = [];
     params['user'] = accountID.toString();
     print("List notify By user...");
-    await http.post(urlListNotifyByUser, body: params).then((res) {
+    await http.post(Uri.parse(urlListNotifyByUser), body: params).then((res) {
       print("List notify By user success !");
       var _jsonDataNotify = jsonDecode(utf8.decode(res.bodyBytes));
       var _dataNotify = _jsonDataNotify['data'];
+      print(_dataNotify);
       for (var i in _dataNotify) {
         _NotifyData _notifyData = _NotifyData(
             i['id'],
@@ -179,7 +181,7 @@ class _NotifyPage extends State {
             i['user'],
             i['item'],
             i['date'],
-            i['image']);
+            );
         listNotifyByUser.insert(0, _notifyData);
       }
     });
@@ -191,7 +193,7 @@ class _NotifyPage extends State {
     Map params = Map();
     params['user'] = accountID.toString();
     print("delete notify...");
-    http.post(urlDeleteNotify, body: params).then((res) {
+    http.post(Uri.parse(urlDeleteNotify), body: params).then((res) {
       print(res.body);
       print("delete notify success !");
     });
@@ -207,8 +209,8 @@ class _NotifyData {
   final int user;
   final int item_id;
   final String date;
-  final String image;
+
 
   _NotifyData(this.id, this.name, this.number, this.price, this.status,
-      this.user, this.item_id, this.date, this.image);
+      this.user, this.item_id, this.date);
 }
